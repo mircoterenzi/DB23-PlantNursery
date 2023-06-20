@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<TabPane prefHeight="547.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibo.nursery.LoginController">
+   <tabs>
+      <Tab closable="false" text="Piante">
+        <content>
+            <BorderPane prefHeight="500.0" prefWidth="785.0">
+               <left>
+                  <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una pianta" wrappingWidth="178.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField fx:id="plantId" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" onAction="#viewCarePlan" prefHeight="25.0" prefWidth="190.0" text="Visualizza piano di cura">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una tipologia" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Sconto da applicare (in  %)" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Applica sconto" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <DatePicker prefHeight="25.0" prefWidth="190.0" promptText="Data " />
+                        <CheckBox mnemonicParsing="false" text="Fertilizzante" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi cura effettuata" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </FlowPane>
+               </left>
+               <center>
+              <ScrollPane BorderPane.alignment="CENTER">
+                <content>
+                  <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="716.0" prefWidth="803.0" />
+                </content>
+              </ScrollPane>
+               </center>
+            </BorderPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Fornitori">
+        <content>
+            <BorderPane prefHeight="500.0" prefWidth="785.0">
+               <left>
+                  <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una pianta" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza fornitori">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un fornitore" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza prodotti" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <TextField promptText="Codice identificativo" />
+                        <TextField promptText="Nome azienda" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </FlowPane>
+               </left>
+               <center>
+                  <ScrollPane BorderPane.alignment="CENTER">
+                     <content>
+                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="716.0" prefWidth="803.0" />
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Dipendenti">
+        <content>
+            <BorderPane prefHeight="500.0" prefWidth="785.0">
+               <left>
+                  <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una turno" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <DatePicker promptText="Data" />
+                        <TextField prefHeight="26.0" prefWidth="10.0" promptText="Da (orario)" />
+                        <TextField prefHeight="26.0" prefWidth="10.0" promptText="A (orario)" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza dipendenti di turno">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un dipendente" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza i prossimi turni" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <TextField promptText="Nome" />
+                        <TextField promptText="Cognome" />
+                        <TextField promptText="Codice fiscale" />
+                        <TextField promptText="Stipendio" />
+                        <DatePicker promptText="Data assunzione" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </FlowPane>
+               </left>
+               <center>
+                  <ScrollPane BorderPane.alignment="CENTER">
+                     <content>
+                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="716.0" prefWidth="803.0" />
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Compra">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab closable="false" text="Vendi">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab closable="false" text="Statistiche">
+        <content>
+            <BorderPane prefHeight="500.0" prefWidth="785.0">
+               <left>
+                  <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una periodo" wrappingWidth="167.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <DatePicker promptText="Da" />
+                        <DatePicker promptText="A" />
+                        <Separator focusTraversable="false" prefHeight="50.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza le piante più vendute">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="190.0" text="Visualizza le piante curate più di quanto indicato nel piano di cura" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </FlowPane>
+               </left>
+               <center>
+                  <ScrollPane BorderPane.alignment="CENTER">
+                     <content>
+                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="716.0" prefWidth="803.0" />
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>
