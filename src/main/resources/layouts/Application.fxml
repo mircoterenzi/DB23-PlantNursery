@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane prefHeight="547.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibo.nursery.LoginController">
+<TabPane prefHeight="547.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab closable="false" text="Piante">
         <content>
@@ -25,9 +25,9 @@
                         <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una pianta" wrappingWidth="178.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="plantId" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <TextField prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button mnemonicParsing="false" onAction="#viewCarePlan" prefHeight="25.0" prefWidth="190.0" text="Visualizza piano di cura">
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Visualizza piano di cura">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -148,7 +148,7 @@
                         <TextField promptText="Stipendio" />
                         <DatePicker promptText="Data assunzione" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un dipendente" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>
