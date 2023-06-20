@@ -14,5 +14,3 @@ The project represents a database for an imaginary plant nursery, the implemente
 12.	View plants that have been treated more than indicated in their care plan
 
 The repository contains a report describing all the steps and analyses done during the creation of this database.
-
-The project was realized by Alessandro Coli and Mirco Terenzi for the database exam of the computer science and engineering course at the University of Bologna
