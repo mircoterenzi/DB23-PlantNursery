@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
@@ -16,6 +18,11 @@
             <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
             <TextField fx:id="username" promptText="Username" />
             <TextField fx:id="password" promptText="Password" />
+            <Text fx:id="errorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="password o nome utente errati" wrappingWidth="161.21630859375">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Text>
             <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonOnClick" text="Accedi" />
          </children>
