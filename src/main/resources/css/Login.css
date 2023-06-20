@@ -1,0 +1,9 @@
+.login-background {
+    -fx-background-image: url('../images/background.jpg');
+    -fx-background-size: cover;
+}
+
+.app-icon {
+    -fx-image: url('../images/icon.png');
+    -fx-background-size: cover;
+}
