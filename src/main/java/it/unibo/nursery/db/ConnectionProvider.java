@@ -30,10 +30,9 @@ public final class ConnectionProvider {
     public Connection getMySQLConnection() {
         final String dbUri = "jdbc:mysql://localhost:3306/" + this.dbName;
         try {
-            // Thanks to the JDBC DriverManager we can get a connection to the database
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(dbUri, this.username, this.password);
-        } catch (final SQLException e) {
-            throw new IllegalStateException("Could not establish a connection with db", e);
-        }
+        } catch (Exception e) {
+            throw new IllegalStateException("Could not establish a connection with db", e);        }
     }
 }

@@ -19,17 +19,28 @@ public class ApplicationController {
     private TextField nome_fornitore_add;
     @FXML
     private Button add_fornitore;
+    @FXML
+    private TextField nome_employee_add;
+    @FXML
+    private TextField conome_employee_add;
+    @FXML
+    private TextField CF_employee_add;
+    @FXML
+    private TextField income_employee_add;
+    @FXML
+    private TextField hire_date;
 
     public ApplicationController(FxAppView view) {
         this.view = view;
     }
 
     @FXML
-    void add_fornitoreOnClick(ActionEvent event) {
+    void addFornitoreOnClick(ActionEvent event) {
         logics.addSupplier(nome_fornitore_add.getText());
-        System.out.println("woo");
+        nome_fornitore_add.clear();
     }
-    //TODO: aggiungere comandi
+    
+    //TODO: aggiungere comandi addFornitoreOnClick
 
 }
 

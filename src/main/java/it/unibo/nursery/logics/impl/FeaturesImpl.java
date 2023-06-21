@@ -19,7 +19,7 @@ public class FeaturesImpl implements Features {
 
     public FeaturesImpl(){
         String username = "root";
-        String password = "pw";
+        String password = "";
 
         String dbName = "plantnursery";
         ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
@@ -152,11 +152,11 @@ public class FeaturesImpl implements Features {
 
     private int getNext(String table_name, String column) {
         String query = "SELECT MAX("+ column + ") FROM " + table_name;
-
+        System.out.println(query);
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
-                return resultSet.getInt(column) + 1;
+                return resultSet.getInt(1) + 1;
             } else {
                 return 1;
             }

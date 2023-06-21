@@ -95,7 +95,7 @@
                         <TextField fx:id="id_fornitore_add" promptText="Codice identificativo" />
                         <TextField fx:id="nome_fornitore_add" promptText="Nome azienda" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button fx:id="add_fornitore" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                        <Button fx:id="add_fornitore" onAction="#addFornitoreOnClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>
