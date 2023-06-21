@@ -52,13 +52,20 @@ public interface Features {
 
     /**
      * View employees on shift.
+     * @param date Date in format dd/mm/yyyy
+     * @param startingTime
+     * @param endTime
      */
-    public void viewOnShift();
+    public void viewOnShift(String date, int startingTime, int endTime);
 
     /**
      * Add treatments performed on a plant.
+     * @param plantID
+     * @param employeeID
+     * @param date Date in format dd/mm/yyyy
+     * @param fertilizer True if the plant has been fertilized
      */
-    public void addTreatment();
+    public void addTreatment(int plantID, int employeeID, String date, boolean fertilizer);
 
     /**
      * Display the best-selling plants in a given period.
