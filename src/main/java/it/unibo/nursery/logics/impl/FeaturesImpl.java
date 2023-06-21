@@ -19,7 +19,7 @@ public class FeaturesImpl implements Features {
 
     public FeaturesImpl(){
         String username = "root";
-        String password = "Delta_Velorum1";
+        String password = "pw";
 
         String dbName = "plantnursery";
         ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
