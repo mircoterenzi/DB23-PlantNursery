@@ -16,14 +16,18 @@ public final class Utils {
         return date == null ? null : new java.sql.Date(date.getTime());
     }
     
-    public static Optional<java.util.Date> buildDate(final int day, final int month, final int year) {
+    public static Optional<java.util.Date> buildDate(final String dateString) {
         try {
             final String dateFormatString = "dd/MM/yyyy";
-            final String dateString = day + "/" + month + "/" + year;
             final java.util.Date date = new SimpleDateFormat(dateFormatString, Locale.ITALIAN).parse(dateString);
             return Optional.of(date);
         } catch (final ParseException e) {
             return Optional.empty();
         }
+    }
+
+    public static Optional<java.util.Date> buildDate(final int day, final int month, final int year) {
+        final String dateString = day + "/" + month + "/" + year;
+        return buildDate(dateString);
     }
 }
