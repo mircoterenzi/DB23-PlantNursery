@@ -12,7 +12,7 @@ public interface Features {
     /**
      * Insert a supplier in the database.
      */
-    public void addSupplier();
+    public void addSupplier(String name);
 
     /**
      * Process an invoice.

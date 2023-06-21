@@ -58,9 +58,35 @@ public class FeaturesImpl implements Features {
         }
     }
 
-    @Override
-    public void processInvoice(Date date, int id_imp, List<Integer> prod) {
-        
+    public  void processInvoice(Date date, int id_imp, List<Integer> prod) {
+         final String query = "insert into scontrino (id_documento,data,impiegato) values (?,?,?)";
+         int id_scontrino = this.nextId_doc();
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1,id_scontrino);
+            statement.setDate(2, Utils.dateToSqlDate(date));
+            statement.setInt(3, id_imp);
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        } 
+        for (int id_prod : prod) {
+            this.addInvoice(id_prod,id_scontrino);
+        }
+    }
+
+    private void addInvoice(int id_prod, int id_scontrino) {
+        final String query = "UPDATE accessorio SET id_scontrino = ? WHERE id_prodotto = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1,id_scontrino);
+            statement.setInt(2, id_prod);
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        } 
     }
 
     @Override
@@ -131,6 +157,44 @@ public class FeaturesImpl implements Features {
              ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 return resultSet.getInt(column) + 1;
+            } else {
+                return 1;
+            }
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private int nextId_prod(){
+        String query = "SELECT MAX(id_prodotto) AS max_id_prodotto" + 
+            "FROM ( SELECT id_prodotto FROM Pianta"+
+            "UNION ALL" +
+            "SELECT id_prodotto FROM Accessorio" +
+            ") AS merged_tables";
+
+            try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getInt("max_id_prodotto") + 1;
+            } else {
+                return 1;
+            }
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private int nextId_doc(){
+        String query = "SELECT MAX(id_documento) AS max_id_documento" + 
+            "FROM ( SELECT id_documento FROM Scontrino"+
+            "UNION ALL" +
+            "SELECT id_documento FROM Fattura" +
+            ") AS merged_tables";
+
+            try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getInt("max_id_documento") + 1;
             } else {
                 return 1;
             }
