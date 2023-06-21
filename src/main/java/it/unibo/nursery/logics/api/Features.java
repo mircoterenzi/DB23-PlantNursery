@@ -1,11 +1,13 @@
 package it.unibo.nursery.logics.api;
 
+import java.util.Date;
+
 public interface Features {
 
     /**
      * Insert an employee in the database.
      */
-    public void addEmployee();
+    public void addEmployee(String FirstName,String LastName,String CF,float income, Date employment_date);
 
     /**
      * Insert a supplier in the database.
