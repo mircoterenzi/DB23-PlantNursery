@@ -142,13 +142,13 @@
                            </font>
                         </Button>
                         <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
-                        <TextField promptText="Nome" />
-                        <TextField promptText="Cognome" />
-                        <TextField promptText="Codice fiscale" />
-                        <TextField promptText="Stipendio" />
-                        <DatePicker promptText="Data assunzione" />
+                        <TextField fx:id="nome_employee_add" promptText="Nome" />
+                        <TextField fx:id="cognome_employee_add" promptText="Cognome" />
+                        <TextField fx:id="CF_employee_add" promptText="Codice fiscale" />
+                        <TextField fx:id="income_employee_add" promptText="Stipendio" />
+                        <TextField fx:id="hire_date" promptText="Data assunzione" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un dipendente" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                        <Button fx:id="add_employee" onAction="#addEmployeeOnClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Aggiungi un dipendente" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>

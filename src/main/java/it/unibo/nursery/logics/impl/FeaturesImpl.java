@@ -35,7 +35,7 @@ public class FeaturesImpl implements Features {
             statement.setString(3, CF);
             statement.setFloat(4,income);
             statement.setDate(5, Utils.dateToSqlDate(employment_date));
-            statement.setInt(6,this.getNext("Impiegati","id_imp"));
+            statement.setInt(6,this.getNext("Impiegato","id_imp"));
             statement.executeUpdate();
         } catch (final SQLIntegrityConstraintViolationException e) {
             throw new IllegalArgumentException(e);
