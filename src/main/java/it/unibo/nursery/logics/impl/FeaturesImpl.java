@@ -72,11 +72,11 @@ public class FeaturesImpl implements Features {
             throw new IllegalStateException(e);
         } 
         for (int id_prod : prod) {
-            this.addInvoice(id_prod,id_scontrino);
+            this.addInvoiceToProduct(id_prod,id_scontrino);
         }
     }
 
-    private void addInvoice(int id_prod, int id_scontrino) {
+    private void addInvoiceToProduct(int id_prod, int id_scontrino) {
         final String query = "UPDATE accessorio SET id_scontrino = ? WHERE id_prodotto = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1,id_scontrino);

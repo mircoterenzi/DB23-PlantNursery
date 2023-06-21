@@ -1,6 +1,7 @@
 package it.unibo.nursery.logics.api;
 
 import java.util.Date;
+import java.util.List;
 
 public interface Features {
 
@@ -17,7 +18,7 @@ public interface Features {
     /**
      * Process an invoice.
      */
-    public void processInvoice();
+    public void processInvoice(Date date, int id_imp, List<Integer> prod);
 
     /**
      * Issue a receipt.
