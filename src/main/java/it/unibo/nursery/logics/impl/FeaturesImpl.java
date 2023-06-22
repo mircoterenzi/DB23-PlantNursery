@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.logics.api.Features;
@@ -60,7 +60,7 @@ public class FeaturesImpl implements Features {
         }
     }
 
-    public  void issueReceipt(Date date, int id_imp, List<Integer> prod) {
+    public  void issueReceipt(Date date, int id_imp, Collection<Integer> prod) {
          final String query = "insert into scontrino (id_documento,data,impiegato) values (?,?,?)";
          int id_receipt = this.nextId_doc();
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -238,10 +238,9 @@ public class FeaturesImpl implements Features {
     public void viewMoreTreated(Date from, Date to) {
         this.createDatesView( from, to);
         this.createCureCountView(from, to);
-        final String query = "SELECT P.id_prodotto, L.care_start, L.care_end, " +
-               "DATEDIFF(L.care_end, L.care_start) AS days_in_care, C.water_count, " +
-               "DATEDIFF(L.care_end, L.care_start) / N.acqua AS expected_acqua, " +
-               "DATEDIFF(L.care_end, L.care_start) / N.concime AS expected_concime, " +
+        final String query = "SELECT P.id_prodotto, DATEDIFF(L.care_end, L.care_start) AS days_in_care, C.water_count, " +
+               "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.acqua) AS expected_acqua, " +
+               "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.concime) AS expected_concime, " +
                "C.concime_count " +
                "FROM Pianta P " +
                "JOIN Tipo_pianta T ON P.nome = T.nome_scientifico " +

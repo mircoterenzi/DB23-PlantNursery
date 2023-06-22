@@ -1,7 +1,7 @@
 package it.unibo.nursery.logics.api;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
 public interface Features {
 
@@ -18,7 +18,7 @@ public interface Features {
     /**
      * Issue a receipt.
      */
-    public void issueReceipt(Date date, int id_imp, List<Integer> prod);
+    public void issueReceipt(Date date, int id_imp, Collection<Integer> prod);
 
     /**
      * Process an invoice.
