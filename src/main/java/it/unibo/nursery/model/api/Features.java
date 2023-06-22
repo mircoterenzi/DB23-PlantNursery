@@ -1,7 +1,7 @@
 package it.unibo.nursery.model.api;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public interface Features {
 
@@ -18,7 +18,7 @@ public interface Features {
     /**
      * Issue a receipt.
      */
-    public void issueReceipt(Date date, int id_imp, List<Integer> prod);
+    public void issueReceipt(Date date, int id_imp, Collection<Integer> prod);
 
     /**
      * Process an invoice.
@@ -65,8 +65,9 @@ public interface Features {
      */
     public void viewBestSelling(String from, String to);
 
-    /**
-     * View plants that have been treated more than indicated in their care plan.
+     /**
+     * View plants that have been treated more than indicated in their care plan 
+     * in the range of dates considered or the time in storage during that timeframe.
      */
     public void viewMoreTreated(Date from, Date to);
 }

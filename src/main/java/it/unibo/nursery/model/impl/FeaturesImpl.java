@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
 import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.model.api.Features;
@@ -60,7 +60,7 @@ public class FeaturesImpl implements Features {
         }
     }
 
-    public  void issueReceipt(Date date, int id_imp, List<Integer> prod) {
+    public  void issueReceipt(Date date, int id_imp, Collection<Integer> prod) {
          final String query = "insert into scontrino (id_documento,data,impiegato) values (?,?,?)";
          int id_receipt = this.nextId_doc();
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -238,7 +238,23 @@ public class FeaturesImpl implements Features {
     public void viewMoreTreated(Date from, Date to) {
         this.createDatesView( from, to);
         this.createCureCountView(from, to);
-        throw new UnsupportedOperationException("Unimplemented method 'viewMoreTreated'");
+        final String query = "SELECT P.id_prodotto, DATEDIFF(L.care_end, L.care_start) AS days_in_care, C.water_count, " +
+               "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.acqua) AS expected_acqua, " +
+               "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.concime) AS expected_concime, " +
+               "C.concime_count " +
+               "FROM Pianta P " +
+               "JOIN Tipo_pianta T ON P.nome = T.nome_scientifico " +
+               "JOIN Piano_di_cura N ON T.piano = N.id_piano " +
+               "JOIN Plant_life L ON P.id_prodotto = L.id_prodotto " +
+               "JOIN Num_cure C ON P.id_prodotto = C.id_prodotto " +
+               "WHERE DATEDIFF(L.care_end, L.care_start) / N.acqua < C.water_count " +
+               "OR DATEDIFF(L.care_end, L.care_start) / N.acqua < C.concime_count;";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
     
 
