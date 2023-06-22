@@ -68,7 +68,7 @@
                <center>
               <ScrollPane BorderPane.alignment="CENTER">
                      <content>
-                        <TextArea prefHeight="606.0" prefWidth="542.0" />
+                        <TextArea fx:id="plantView" prefHeight="606.0" prefWidth="542.0" />
                      </content>
               </ScrollPane>
                </center>
@@ -105,7 +105,7 @@
                <center>
                   <ScrollPane BorderPane.alignment="CENTER">
                      <content>
-                        <TextArea prefHeight="633.0" prefWidth="542.0" />
+                        <TextArea fx:id="supplierView" prefHeight="633.0" prefWidth="542.0" />
                      </content>
                   </ScrollPane>
                </center>
@@ -158,7 +158,7 @@
                <center>
                   <ScrollPane BorderPane.alignment="CENTER">
                      <content>
-                        <TextArea fx:id="EmployeeView" prefHeight="595.0" prefWidth="546.0" />
+                        <TextArea fx:id="employeeView" prefHeight="595.0" prefWidth="546.0" />
                      </content>
                   </ScrollPane>
                </center>
@@ -204,7 +204,7 @@
                <center>
                   <ScrollPane BorderPane.alignment="CENTER">
                      <content>
-                        <TextArea fx:id="StatView" prefHeight="530.0" prefWidth="534.0" />
+                        <TextArea fx:id="statView" prefHeight="530.0" prefWidth="534.0" />
                      </content>
                   </ScrollPane>
                </center>

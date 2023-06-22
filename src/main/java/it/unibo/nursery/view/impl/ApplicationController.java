@@ -1,6 +1,7 @@
 package it.unibo.nursery.view.impl;
 
 import it.unibo.nursery.model.api.Features;
+import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.model.impl.FeaturesImpl;
 import it.unibo.nursery.utils.Utils;
 import javafx.event.ActionEvent;
@@ -12,8 +13,6 @@ import javafx.scene.control.TextField;
 
 public class ApplicationController {
 
-    @FXML private TextArea EmployeeView;
-    @FXML private TextArea StatView;
     @FXML private Button add_employee;
     @FXML private Button add_fornitore;
     @FXML private TextField dateTreatment;
@@ -23,17 +22,21 @@ public class ApplicationController {
     @FXML private TextField employeeName;
     @FXML private TextField employeeSalary;
     @FXML private TextField employeeSurname;
+    @FXML private TextArea employeeView;
     @FXML private CheckBox fertilizer;
     @FXML private TextField hireDate;
     @FXML private TextField plantID;
     @FXML private TextField plantTypeID;
+    @FXML private TextArea plantView;
     @FXML private TextField shiftDate;
     @FXML private TextField shiftEndTime;
     @FXML private TextField shiftStartingTime;
     @FXML private TextField statEndDate;
     @FXML private TextField statStartingDate;
+    @FXML private TextArea statView;
     @FXML private TextField supplierID;
     @FXML private TextField supplierName;
+    @FXML private TextArea supplierView;
     
     private Features features;
 
@@ -99,6 +102,8 @@ public class ApplicationController {
 
     @FXML
     void viewProductsOnClick(ActionEvent event) {
+        ResultTable res = features.viewProducts(Integer.parseInt(supplierID.getText()));
+        supplierView.setText(res.getTableToString());
 
     }
 
