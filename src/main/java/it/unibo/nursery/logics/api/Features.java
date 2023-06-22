@@ -18,17 +18,17 @@ public interface Features {
     /**
      * Process an invoice.
      */
-    public void processInvoice(Date date, int id_imp, List<Integer> prod);
+    public void issueReceipt(Date date, int id_imp, List<Integer> prod);
 
     /**
      * Issue a receipt.
      */
-    public void issueReceipt();
+    public void processInvoice();
 
     /**
      * Apply a discount on a type of plant.
      */
-    public void applyDiscount();
+    public void applyDiscount(String scientific_name, int discount);
 
     /**
      * View all suppliers for a given product.

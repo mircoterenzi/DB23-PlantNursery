@@ -28,7 +28,9 @@ public class FeaturesImpl implements Features {
 
     @Override
     public void addEmployee(String FirstName,String LastName,String CF,float income, Date employment_date) {
-        final String query = "INSERT INTO Impiegato (nome, cognome, CF, stipendio, data_assunzione, id_imp) VALUES (?,?,?,?,?,?)";
+        final String query = "INSERT INTO Impiegato" +
+                                "(nome, cognome, CF, stipendio, data_assunzione, id_imp)" + 
+                                " VALUES (?,?,?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, FirstName);
             statement.setString(2, LastName);
@@ -58,11 +60,11 @@ public class FeaturesImpl implements Features {
         }
     }
 
-    public  void processInvoice(Date date, int id_imp, List<Integer> prod) {
+    public  void issueReceipt(Date date, int id_imp, List<Integer> prod) {
          final String query = "insert into scontrino (id_documento,data,impiegato) values (?,?,?)";
-         int id_scontrino = this.nextId_doc();
+         int id_receipt = this.nextId_doc();
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1,id_scontrino);
+            statement.setInt(1,id_receipt);
             statement.setDate(2, Utils.dateToSqlDate(date));
             statement.setInt(3, id_imp);
             statement.executeUpdate();
@@ -72,14 +74,14 @@ public class FeaturesImpl implements Features {
             throw new IllegalStateException(e);
         } 
         for (int id_prod : prod) {
-            this.addInvoiceToProduct(id_prod,id_scontrino);
+            this.addReceiptToProduct(id_prod,id_receipt);
         }
     }
 
-    private void addInvoiceToProduct(int id_prod, int id_scontrino) {
+    private void addReceiptToProduct(int id_prod, int id_receipt) {
         final String query = "UPDATE accessorio SET id_scontrino = ? WHERE id_prodotto = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1,id_scontrino);
+            statement.setInt(1, id_receipt);
             statement.setInt(2, id_prod);
             statement.executeUpdate();
         } catch (final SQLIntegrityConstraintViolationException e) {
@@ -90,15 +92,29 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void issueReceipt() {
+    public void processInvoice() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'issueReceipt'");
     }
 
     @Override
-    public void applyDiscount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyDiscount'");
+    public void applyDiscount(String scientific_name, int discount) {
+
+        if(scientific_name.length()>20 || discount >100 || discount<0 ){
+            throw new IllegalArgumentException("invalid parameters for applyDiscount");
+        }
+
+        final String query = "UPDATE Pianta SET prezzo = prezzo *?" + 
+                            "WHERE nome = '?' )";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, 1-discount/100);
+            statement.setString(2, scientific_name);
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
