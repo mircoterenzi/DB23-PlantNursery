@@ -198,15 +198,10 @@ public class FeaturesImpl implements Features {
             final ResultSet result = statement.executeQuery();
 
             // build the table
-            final ResultTable table = new ResultTableImpl();
-            final List<String> suplierIDs = new ArrayList<>();
-            final List<String> plantNames = new ArrayList<>();
+            final ResultTable table = new ResultTableImpl(List.of("id_fornitore","nome"));
             while (result.next()) {
-                suplierIDs.add(Integer.toString(result.getInt("id_fornitore")));
-                plantNames.add(result.getString("nome"));
+                table.addLine(List.of(Integer.toString(result.getInt("id_fornitore")),result.getString("nome")));
             }
-            table.addColumn("ID", suplierIDs);
-            table.addColumn("NOME", plantNames);
             
             return table;
         } catch (final SQLException e) {

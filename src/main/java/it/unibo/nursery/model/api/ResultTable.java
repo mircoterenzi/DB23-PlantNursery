@@ -7,7 +7,7 @@ public interface ResultTable {
     /**
      * Add a column of datas to the table.
      */
-    public void addColumn(String title, List<String> data);
+    public void addLine(List<String> line);
 
     /**
      * Returns a table in string format.
