@@ -43,7 +43,7 @@ public interface Features {
     /**
      * View the care plan for a plant.
      */
-    public void viewCarePlan();
+    public void viewCarePlan(int id);
 
     /**
      * View an employee's next shift.
@@ -52,18 +52,11 @@ public interface Features {
 
     /**
      * View employees on shift.
-     * @param date Date in format dd/mm/yyyy
-     * @param startingTime
-     * @param endTime
      */
     public void viewOnShift(String date, int startingTime, int endTime);
 
     /**
      * Add treatments performed on a plant.
-     * @param plantID
-     * @param employeeID
-     * @param date Date in format dd/mm/yyyy
-     * @param fertilizer True if the plant has been fertilized
      */
     public void addTreatment(int plantID, int employeeID, String date, boolean fertilizer);
 

@@ -114,9 +114,19 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewCarePlan() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewCarePlan'");
+    public void viewCarePlan(int id) {
+        final String query = "SELECT Piano.* " + 
+                "FROM Piano_di_Cura Piano, Pianta P, Tipo_pianta T " + 
+                "WHERE ? = P.id_prodotto " +
+                "AND P.nome = T.nome_scientifico " +
+                "AND T.piano = id_piano";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
@@ -125,20 +135,17 @@ public class FeaturesImpl implements Features {
         throw new UnsupportedOperationException("Unimplemented method 'viewNextShift'");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void viewOnShift(String date, int startingTime, int endTime) {
-        final String query = "SELECT id_imp, nome, cognome, ora_inizio, ora_fine " + 
-                "FROM Turno T, Impiegati I " + 
+        final String query = "SELECT I.id_imp, nome, cognome, ora_inizio, ora_fine " + 
+                "FROM Turno T, Impiegato I " + 
                 "WHERE T.id_imp = I.id_imp " +
                 "AND (ora_inizio >= ? OR ora_fine <= ?) " +
                 "AND data = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(date).get()));
-            statement.setInt(2, startingTime);
-            statement.setInt(3, endTime);
+            statement.setInt(1, startingTime);
+            statement.setInt(2, endTime);
+            statement.setDate(3, Utils.dateToSqlDate(Utils.buildDate(date).get()));
             final ResultSet result = statement.executeQuery();
             //TODO show the result on the side
         } catch (final SQLException e) {
@@ -146,9 +153,6 @@ public class FeaturesImpl implements Features {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void addTreatment(int plantID, int employeeID, String date, boolean fertilizer) {
         final String query = "INSERT INTO Cura (pianta, data, id_imp, concime) " + 
@@ -162,7 +166,6 @@ public class FeaturesImpl implements Features {
             throw new IllegalStateException(e);
         }
     }
-
 
     @Override
     public void viewBestSelling() {
