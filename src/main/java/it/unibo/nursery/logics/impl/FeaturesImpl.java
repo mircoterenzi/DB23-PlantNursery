@@ -136,14 +136,10 @@ public class FeaturesImpl implements Features {
 
     @Override
     public void viewProducts(int id) {
-        final String query = "SELECT DISTINCT F.id_fornitore, P.nome, P.prezzo " + 
-                "FROM Pianta P, Fattura F " + 
-                "WHERE P.id_fattura = F.id_documento " + 
-                "AND F.id_fornitore = ? " + 
-                "AND P.prezzo = (SELECT prezzo FROM Pianta " + 
-                                "WHERE P.id_prodotto = id_prodotto " + 
-                                "ORDER BY prezzo " + 
-                                "LIMIT 1)";
+        final String query = "SELECT DISTINCT id_fornitore, nome " +
+                "FROM Pianta, Fattura " +
+                "WHERE id_fattura = id_documento " +
+                "AND id_fornitore = 2";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
             final ResultSet result = statement.executeQuery();
@@ -170,9 +166,21 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewNextShift() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewNextShift'");
+    public void viewNextShift(int id) {
+        final String query = "SELECT cod_reparto, data, ora_inizio, ora_fine " +
+                "FROM Turno " +
+                "WHERE id_imp = ? " +
+                "AND data > ? " +
+                "ORDER BY data, ora_inizio " +
+                "LIMIT 1";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override

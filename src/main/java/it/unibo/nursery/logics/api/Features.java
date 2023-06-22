@@ -48,7 +48,7 @@ public interface Features {
     /**
      * View an employee's next shift.
      */
-    public void viewNextShift();
+    public void viewNextShift(int id);
 
     /**
      * View employees on shift.
