@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.model.api.Features;
+import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.utils.Utils;
 
 public class FeaturesImpl implements Features {
@@ -185,15 +188,27 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewProducts(int id) {
+    public ResultTable viewProducts(int id) {
         final String query = "SELECT DISTINCT id_fornitore, nome " +
                 "FROM Pianta, Fattura " +
                 "WHERE id_fattura = id_documento " +
-                "AND id_fornitore = 2";
+                "AND id_fornitore = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
+
+            // build the table
+            final ResultTable table = new ResultTableImpl();
+            final List<String> suplierIDs = new ArrayList<>();
+            final List<String> plantNames = new ArrayList<>();
+            while (result.next()) {
+                suplierIDs.add(Integer.toString(result.getInt("id_fornitore")));
+                plantNames.add(result.getString("nome"));
+            }
+            table.addColumn("ID", suplierIDs);
+            table.addColumn("NOME", plantNames);
+            
+            return table;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
