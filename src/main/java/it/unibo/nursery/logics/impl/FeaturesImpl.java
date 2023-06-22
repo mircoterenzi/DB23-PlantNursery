@@ -3,14 +3,14 @@ package it.unibo.nursery.logics.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
-import it.unibo.nursery.logics.api.Features;
 import it.unibo.nursery.db.ConnectionProvider;
+import it.unibo.nursery.logics.api.Features;
 import it.unibo.nursery.utils.Utils;
 
 public class FeaturesImpl implements Features {
@@ -227,11 +227,54 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewMoreTreated() {
-        // TODO Auto-generated method stub
+    public void viewMoreTreated(Date from, Date to) {
+        this.createDatesView( from, to);
+        this.createCureCountView(from, to);
         throw new UnsupportedOperationException("Unimplemented method 'viewMoreTreated'");
     }
     
+
+    private void createCureCountView(Date from, Date to) {
+        final String query = "CREATE OR REPLACE VIEW Num_cure as" +
+                            "Select P.id_prodotto, water_count,concime_count" +
+                            "from Pianta P, (SELECT pianta, COUNT(*) AS water_count" +
+                                            "FROM Cura where data between ? and ?" +
+                                            "GROUP BY pianta) water_count," + 
+                                "(SELECT pianta, COUNT(*) AS concime_count"+ 
+                                            "FROM Cura where concime = true and data between ? and ?" +
+                                            "GROUP BY pianta) concime_count" +
+                            "where P.id_prodotto = water_count.pianta and P.id_prodotto = concime_count.pianta";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setDate(1, Utils.dateToSqlDate(Utils.dateToSqlDate(from)));
+            statement.setDate(2, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
+            statement.setDate(3, Utils.dateToSqlDate(Utils.dateToSqlDate(from)));
+            statement.setDate(4, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
+            statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private void createDatesView(Date from, Date to) {
+        final String query = "CREATE OR REPLACE VIEW Plant_life AS"+
+                                "SELECT  p.id_prodotto,"+
+                                "CASE WHEN f.data < ? THEN ? ELSE f.data END AS care_start,"+
+                                "CASE WHEN s.data > ? THEN ^ ELSE COALESCE(s.data, ?) END AS care_end"+
+                                "FROM  Pianta p LEFT JOIN  Scontrino s ON p.id_scontrino = s.id_documento"+
+                                "JOIN  Fattura f ON p.id_fattura = f.id_documento";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setDate(1, Utils.dateToSqlDate(Utils.dateToSqlDate(from)));
+            statement.setDate(2, Utils.dateToSqlDate(Utils.dateToSqlDate(from)));
+            statement.setDate(3, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
+            statement.setDate(4, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
+            statement.setDate(5, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
+            statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     private int getNext(String table_name, String column) {
         String query = "SELECT MAX("+ column + ") FROM " + table_name;

@@ -68,5 +68,5 @@ public interface Features {
     /**
      * View plants that have been treated more than indicated in their care plan.
      */
-    public void viewMoreTreated();
+    public void viewMoreTreated(Date from, Date to);
 }
