@@ -33,7 +33,7 @@ public interface Features {
     /**
      * View all suppliers for a given product.
      */
-    public void viewSuppliers();
+    public void viewSuppliers(int id);
 
     /**
      * View all products available from a given supplier.
@@ -63,7 +63,7 @@ public interface Features {
     /**
      * Display the best-selling plants in a given period.
      */
-    public void viewBestSelling();
+    public void viewBestSelling(String from, String to);
 
     /**
      * View plants that have been treated more than indicated in their care plan.

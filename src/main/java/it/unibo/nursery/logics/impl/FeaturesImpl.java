@@ -118,9 +118,19 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewSuppliers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewSuppliers'");
+    public void viewSuppliers(int id) {
+        final String query = "SELECT DISTINCT P.* " + 
+                "FROM Pianta P, Accessorio A, Fornitore F, Fattura Ft " + 
+                "WHERE ((P.id_prodotto = 31 AND P.id_fattura = Ft.id_documento)  " + 
+                "    OR (A.id_prodotto = 31 AND A.id_fattura = Ft.id_documento)) " + 
+                "AND Ft.id_fornitore = F.id_fornitore";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            //statement.setInt(1, id);
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
@@ -184,9 +194,22 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewBestSelling() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewBestSelling'");
+    public void viewBestSelling(String from, String to) {
+        final String query = "SELECT nome, COUNT(*) AS num_piante " +
+                "FROM Pianta, Scontrino " +
+                "WHERE id_scontrino = id_documento " +
+                "AND data BETWEEN ? AND ? " +
+                "GROUP BY nome " +
+                "ORDER BY num_piante " +
+                "LIMIT 3";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(from).get()));
+            statement.setDate(2, Utils.dateToSqlDate(Utils.buildDate(to).get()));
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
