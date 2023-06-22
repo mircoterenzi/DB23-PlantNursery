@@ -1,5 +1,8 @@
 package it.unibo.nursery.view.impl;
 
+import java.util.Date;
+import java.util.Optional;
+
 import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.model.impl.FeaturesImpl;
@@ -92,7 +95,14 @@ public class ApplicationController {
 
     @FXML
     void viewMoreTreatedOnClick(ActionEvent event) {
-
+        Optional<Date> start = Utils.buildDate(statStartingDate.getText());
+        Optional<Date> end = Utils.buildDate(statEndDate.getText());
+        if( end.isPresent() && start.isPresent()){
+            ResultTable res = features.viewMoreTreated(start.get(),end.get());
+            statStartingDate.clear();
+            statEndDate.clear();
+            statView.setText(res.getTableToString());
+        }
     }
 
     @FXML

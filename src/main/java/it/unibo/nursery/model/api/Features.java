@@ -72,5 +72,5 @@ public interface Features {
      * View plants that have been treated more than indicated in their care plan 
      * in the range of dates considered or the time in storage during that timeframe.
      */
-    public void viewMoreTreated(Date from, Date to);
+    public ResultTable viewMoreTreated(Date from, Date to);
 }

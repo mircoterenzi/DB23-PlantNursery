@@ -67,10 +67,6 @@ public class ResultTableImpl implements ResultTable {
             int columnWidth = columnWidths.get(i);
             int padding = columnWidth - cellLength;
             tableBuilder.append(cell);
-            if (padding >= 4){
-                tableBuilder.append("\t");
-                padding =padding-4;
-            }
             for (int j = 0; j < padding; j++) {
                 tableBuilder.append(" ");
             }
