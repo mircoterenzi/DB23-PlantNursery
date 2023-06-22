@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.Collection;
 
+import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.ConnectionProvider;
+import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.utils.Utils;
 
@@ -92,9 +94,57 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void processInvoice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'issueReceipt'");
+    public void processInvoice(int id_supplier,Date date,Collection<Plant> plants, Collection<Accessory> accessories) {
+        int id_invoice = this.nextId_doc();
+        final String query = "insert into fattura(id_documento,data,id_fornitore) values(?,?,?)";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, id_invoice);
+            statement.setDate(2, Utils.dateToSqlDate(date));
+            statement.setInt(3, id_supplier);
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        plants.forEach(p -> addPlant(p,id_invoice));
+        accessories.forEach(p -> addAccessory(p,id_invoice));
+    }
+
+    private void addAccessory(Accessory p, int id_invoice) {
+        final String query = "INSERT INTO Accessorio (id_prodotto, descrizione, id_fattura, id_scontrino, tipo)\n" + 
+                "VALUES(?,?,?,NULL,?)";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, this.nextId_prod());
+            statement.setString(2, p.getDescription());
+            statement.setInt(3, id_invoice);
+            statement.setString(4, p.getType());
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private void addPlant(Plant p, int id_invoice) {
+        final String query = "INSERT INTO Pianta"+
+                            "(id_prodotto, descrizione, larghezza_vaso, altezza, prezzo, id_fattura, id_scontrino, nome)"+
+                            "VALUES(?,?,?,?,?,?,NULL,?)";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, this.nextId_prod());
+            statement.setString(2, p.getDescription());
+            statement.setFloat(3, p.getLength());
+            statement.setFloat(4, p.getHeight());
+            statement.setFloat(5, p.getPrice());
+            statement.setInt(6, id_invoice);
+            statement.setString(7, p.getScientificName());
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override

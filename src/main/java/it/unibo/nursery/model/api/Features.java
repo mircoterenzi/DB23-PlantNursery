@@ -3,6 +3,9 @@ package it.unibo.nursery.model.api;
 import java.util.Collection;
 import java.util.Date;
 
+import it.unibo.nursery.db.Accessory;
+import it.unibo.nursery.db.Plant;
+
 public interface Features {
 
     /**
@@ -23,7 +26,7 @@ public interface Features {
     /**
      * Process an invoice.
      */
-    public void processInvoice();
+    public void processInvoice(int id_supplier,Date date,Collection<Plant> plants, Collection<Accessory> accessories);
 
     /**
      * Apply a discount on a type of plant.
