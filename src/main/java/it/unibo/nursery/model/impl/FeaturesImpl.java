@@ -1,4 +1,4 @@
-package it.unibo.nursery.logics.impl;
+package it.unibo.nursery.model.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import it.unibo.nursery.db.ConnectionProvider;
-import it.unibo.nursery.logics.api.Features;
+import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.utils.Utils;
 
 public class FeaturesImpl implements Features {

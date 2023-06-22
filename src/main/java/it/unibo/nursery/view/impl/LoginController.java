@@ -1,7 +1,7 @@
 package it.unibo.nursery.view.impl;
 
-import it.unibo.nursery.logics.api.LoginLogics;
-import it.unibo.nursery.logics.impl.LoginLogicsImpl;
+import it.unibo.nursery.model.api.LoginLogics;
+import it.unibo.nursery.model.impl.LoginLogicsImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,7 +1,7 @@
 package it.unibo.nursery.view.impl;
 
-import it.unibo.nursery.logics.api.Features;
-import it.unibo.nursery.logics.impl.FeaturesImpl;
+import it.unibo.nursery.model.api.Features;
+import it.unibo.nursery.model.impl.FeaturesImpl;
 import it.unibo.nursery.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

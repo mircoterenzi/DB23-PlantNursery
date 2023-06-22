@@ -1,9 +1,9 @@
-package it.unibo.nursery.logics.impl;
+package it.unibo.nursery.model.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.nursery.logics.api.LoginLogics;
+import it.unibo.nursery.model.api.LoginLogics;
 import javafx.util.Pair;
 
 public class LoginLogicsImpl implements LoginLogics {

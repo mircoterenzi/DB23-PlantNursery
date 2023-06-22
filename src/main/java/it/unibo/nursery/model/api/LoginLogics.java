@@ -1,4 +1,4 @@
-package it.unibo.nursery.logics.api;
+package it.unibo.nursery.model.api;
 
 public interface LoginLogics {
 
