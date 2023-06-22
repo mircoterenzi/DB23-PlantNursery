@@ -16,12 +16,12 @@ public interface Features {
     public void addSupplier(String name);
 
     /**
-     * Process an invoice.
+     * Issue a receipt.
      */
     public void issueReceipt(Date date, int id_imp, List<Integer> prod);
 
     /**
-     * Issue a receipt.
+     * Process an invoice.
      */
     public void processInvoice();
 
@@ -38,7 +38,7 @@ public interface Features {
     /**
      * View all products available from a given supplier.
      */
-    public void viewProducts();
+    public void viewProducts(int id);
 
     /**
      * View the care plan for a plant.

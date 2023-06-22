@@ -121,11 +121,12 @@ public class FeaturesImpl implements Features {
     public void viewSuppliers(int id) {
         final String query = "SELECT DISTINCT P.* " + 
                 "FROM Pianta P, Accessorio A, Fornitore F, Fattura Ft " + 
-                "WHERE ((P.id_prodotto = 31 AND P.id_fattura = Ft.id_documento)  " + 
-                "    OR (A.id_prodotto = 31 AND A.id_fattura = Ft.id_documento)) " + 
+                "WHERE ((P.id_prodotto = ? AND P.id_fattura = Ft.id_documento) " + 
+                "    OR (A.id_prodotto = ? AND A.id_fattura = Ft.id_documento)) " + 
                 "AND Ft.id_fornitore = F.id_fornitore";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            //statement.setInt(1, id);
+            statement.setInt(1, id);
+            statement.setInt(2, id);
             final ResultSet result = statement.executeQuery();
             //TODO show the result on the side
         } catch (final SQLException e) {
@@ -134,9 +135,22 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewProducts() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewProducts'");
+    public void viewProducts(int id) {
+        final String query = "SELECT DISTINCT F.id_fornitore, P.nome, P.prezzo " + 
+                "FROM Pianta P, Fattura F " + 
+                "WHERE P.id_fattura = F.id_documento " + 
+                "AND F.id_fornitore = ? " + 
+                "AND P.prezzo = (SELECT prezzo FROM Pianta " + 
+                                "WHERE P.id_prodotto = id_prodotto " + 
+                                "ORDER BY prezzo " + 
+                                "LIMIT 1)";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            final ResultSet result = statement.executeQuery();
+            //TODO show the result on the side
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
