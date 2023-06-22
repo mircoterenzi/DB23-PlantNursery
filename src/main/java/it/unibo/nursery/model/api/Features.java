@@ -4,7 +4,13 @@ import java.util.Collection;
 import java.util.Date;
 
 import it.unibo.nursery.db.Accessory;
+import it.unibo.nursery.db.CarePlan;
+import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
+import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.Shift;
+import it.unibo.nursery.db.Supplier;
+import javafx.collections.ObservableList;
 
 public interface Features {
 
@@ -36,27 +42,27 @@ public interface Features {
     /**
      * View all suppliers for a given product.
      */
-    public void viewSuppliers(int id);
+    public ObservableList<Supplier> viewSuppliers(int id);
 
     /**
      * View all products available from a given supplier.
      */
-    public ResultTable viewProducts(int id);
+    public ObservableList<Supplier> viewProducts(int id);
 
     /**
      * View the care plan for a plant.
      */
-    public void viewCarePlan(int id);
+    public ObservableList<CarePlan> viewCarePlan(int id);
 
     /**
      * View an employee's next shift.
      */
-    public void viewNextShift(int id);
+    public ObservableList<Shift> viewNextShift(int id);
 
     /**
      * View employees on shift.
      */
-    public void viewOnShift(String date, int startingTime, int endTime);
+    public ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime);
 
     /**
      * Add treatments performed on a plant.
@@ -66,11 +72,11 @@ public interface Features {
     /**
      * Display the best-selling plants in a given period.
      */
-    public void viewBestSelling(String from, String to);
+    public ObservableList<PlantType> viewBestSelling(String from, String to);
 
      /**
      * View plants that have been treated more than indicated in their care plan 
      * in the range of dates considered or the time in storage during that timeframe.
      */
-    public ResultTable viewMoreTreated(Date from, Date to);
+    public ObservableList<Plant> viewMoreTreated(Date from, Date to);
 }

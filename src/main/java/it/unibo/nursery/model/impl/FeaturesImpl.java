@@ -12,11 +12,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import it.unibo.nursery.db.Accessory;
+import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.db.Plant;
+import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.utils.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class FeaturesImpl implements Features {
 
@@ -24,7 +28,7 @@ public class FeaturesImpl implements Features {
 
     public FeaturesImpl(){
         String username = "root";
-        String password = "Delta?Velorum1";
+        String password = "raparossa";
 
         String dbName = "plantnursery";
         ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
@@ -171,8 +175,8 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewSuppliers(int id) {
-        final String query = "SELECT DISTINCT P.* " + 
+    public ObservableList<Supplier> viewSuppliers(int id) {
+        final String query = "SELECT DISTINCT F.* " + 
                 "FROM Pianta P, Accessorio A, Fornitore F, Fattura Ft " + 
                 "WHERE ((P.id_prodotto = ? AND P.id_fattura = Ft.id_documento) " + 
                 "    OR (A.id_prodotto = ? AND A.id_fattura = Ft.id_documento)) " + 
@@ -181,14 +185,20 @@ public class FeaturesImpl implements Features {
             statement.setInt(1, id);
             statement.setInt(2, id);
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
+            
+            final ObservableList<Supplier> data = FXCollections.observableArrayList();
+            while (result.next()) {
+                data.add(new Supplier(result.getInt("id_fornitore"), result.getString("nome")));
+            }
+            return data;
+
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public ResultTable viewProducts(int id) {
+    public ObservableList<Supplier> viewProducts(int id) {
         final String query = "SELECT DISTINCT id_fornitore, nome " +
                 "FROM Pianta, Fattura " +
                 "WHERE id_fattura = id_documento " +
@@ -197,20 +207,19 @@ public class FeaturesImpl implements Features {
             statement.setInt(1, id);
             final ResultSet result = statement.executeQuery();
 
-            // build the table
-            final ResultTable table = new ResultTableImpl(List.of("id_fornitore","nome"));
+            final ObservableList<Supplier> data = FXCollections.observableArrayList();
             while (result.next()) {
-                table.addLine(List.of(Integer.toString(result.getInt("id_fornitore")),result.getString("nome")));
+                data.add(new Supplier(result.getInt("id_fornitore"), result.getString("nome")));
             }
-            
-            return table;
+            return data;
+
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public void viewCarePlan(int id) {
+    public ObservableList<CarePlan> viewCarePlan(int id) {
         final String query = "SELECT Piano.* " + 
                 "FROM Piano_di_Cura Piano, Pianta P, Tipo_pianta T " + 
                 "WHERE ? = P.id_prodotto " +
@@ -219,7 +228,20 @@ public class FeaturesImpl implements Features {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
+
+            final ObservableList<CarePlan> data = FXCollections.observableArrayList();
+            while (result.next()) {
+                data.add(new CarePlan(
+                        result.getInt("id_piano"),
+                        result.getFloat("acqua"),
+                        result.getString("livello_luce"),
+                        result.getFloat("concime"),
+                        result.getFloat("temp_min"),
+                        result.getFloat("temp_max")
+                ));
+            }
+            return data;
+            
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
