@@ -38,7 +38,7 @@ public interface Features {
     /**
      * View all products available from a given supplier.
      */
-    public void viewProducts(int id);
+    public ResultTable viewProducts(int id);
 
     /**
      * View the care plan for a plant.
