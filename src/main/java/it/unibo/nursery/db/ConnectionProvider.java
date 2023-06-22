@@ -2,7 +2,6 @@ package it.unibo.nursery.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 /**
  * Expose a utility method to connect to a MySQL database 

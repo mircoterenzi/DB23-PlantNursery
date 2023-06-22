@@ -10,20 +10,12 @@ import javafx.scene.text.Text;
 
 public class LoginController {
 
-    @FXML
-    private Text errorMessage;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private TextField password;
-
-    @FXML
-    private TextField username;
+    @FXML private Text errorMessage;
+    @FXML private Button loginButton;
+    @FXML private TextField password;
+    @FXML private TextField username;
 
     private FxAppView view;
-
     private LoginLogics logics;
 
     public LoginController(FxAppView view) {

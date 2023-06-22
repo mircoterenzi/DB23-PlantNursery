@@ -9,9 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/**
- * Sample JavaFX application with GUI declared in FXML file.
- */
 public class FxAppView implements AppView {
 
     private Stage stage;
@@ -47,7 +44,7 @@ public class FxAppView implements AppView {
     public void setApplicationScene() {
         try {
             final var loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/Application.fxml"));
-            loader.setController(new ApplicationController(this));
+            loader.setController(new ApplicationController());
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
             stage.setScene(scene);
