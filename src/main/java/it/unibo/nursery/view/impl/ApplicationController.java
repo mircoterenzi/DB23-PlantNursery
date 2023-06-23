@@ -47,7 +47,7 @@ public class ApplicationController {
     @FXML private TextField shiftStartingTime;
     @FXML private TextField statEndDate;
     @FXML private TextField statStartingDate;
-    @FXML private Pane statView;
+    @FXML private TableView statView;
     @FXML private TextField supplierID;
     @FXML private TextField supplierName;
     @FXML private TableView supplierView;
@@ -131,14 +131,13 @@ public class ApplicationController {
     void viewMoreTreatedOnClick(ActionEvent event) {
         Optional<Date> start = Utils.buildDate(statStartingDate.getText());
         Optional<Date> end = Utils.buildDate(statEndDate.getText());
-        TableView<PlantCure> sView =  new TableView<>();
         var titles = List.of("plant", "type", "days in care", "water expected", "water given", "fertilizer expected", "fertilizer given");
         if (end.isPresent() && start.isPresent()) {
             ObservableList<PlantCure> values = features.viewMoreTreated(start.get(), end.get());
             statStartingDate.clear();
             statEndDate.clear();
-            sView.setItems(values);
-            sView.getColumns().clear(); // Clear existing columns before adding new ones
+            statView.setItems(values);
+            statView.getColumns().clear(); // Clear existing columns before adding new ones
 
             for (int i = 0; i < titles.size(); i++) {
                 TableColumn<PlantCure, String> column = new TableColumn<>(titles.get(i));
@@ -159,11 +158,8 @@ public class ApplicationController {
                     return new SimpleStringProperty(cellValue);
                 });
 
-                sView.getColumns().add(column);
+                statView.getColumns().add(column);
             }
-            statView.getChildren().clear();
-            statView.getChildren().add(sView);
-            sView.setVisible(true);
         }
     }
 
@@ -174,12 +170,17 @@ public class ApplicationController {
 
     @FXML
     void viewProductsOnClick(ActionEvent event) {
-
+        
     }
 
     @FXML
     void viewSuppliersOnClick(ActionEvent event) {
         showSuppliers(plantView, features.viewSuppliers(Integer.parseInt(plantID.getText())));
+    }
+
+    @FXML
+    void initialize() {
+        //TODO set the view of the table in all tabs
     }
 
     private void showSuppliers(TableView<Supplier> view, ObservableList<Supplier> data) {
