@@ -12,5 +12,15 @@ public interface AppView {
     /**
      * Set the Application scene.
      */
-    public void setApplicationScene(Connection connection);
+    public void setApplicationScene();
+
+    /*
+     * Opens a pop-up window for the Document scene
+     */
+    public void openDocumentScene();
+
+    /**
+     * Add a connection to a DB.
+     */
+    public void addConnection(Connection connection);
 }

@@ -55,9 +55,11 @@ public class ApplicationController {
     @FXML private TableView supplierView;
     
     private Features features;
+    private AppView view;
 
-    public ApplicationController(Connection connection) {
-        features = new FeaturesImpl(connection);
+    public ApplicationController(AppView view, Features features) {
+        this.view = view;
+        this.features = features;
     }
 
     @FXML
@@ -105,7 +107,7 @@ public class ApplicationController {
 
     @FXML
     void viewBestSellersOnClick(ActionEvent event) {
-
+        //TODO
     }
 
     @FXML
@@ -173,17 +175,27 @@ public class ApplicationController {
 
     @FXML
     void viewNextShiftOnClick(ActionEvent event) {
-
+        //TODO
     }
 
     @FXML
     void viewProductsOnClick(ActionEvent event) {
-        
+        //TODO
     }
 
     @FXML
     void viewSuppliersOnClick(ActionEvent event) {
         showSuppliers(plantView, features.viewSuppliers(Integer.parseInt(productID.getText())));
+    }
+
+    @FXML
+    void removeSupplierOnClick(ActionEvent event) {
+        //TODO
+    }
+
+    @FXML
+    void openDocumentManagerOnClick(ActionEvent event) {
+        view.openDocumentScene();
     }
 
     @FXML
