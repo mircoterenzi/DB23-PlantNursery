@@ -181,14 +181,14 @@ public class ApplicationController {
     @FXML
     void viewNextShiftOnClick(ActionEvent event) {
         employeeView.getColumns().clear();
-        TableColumn<Shift,Integer> id = new TableColumn<>("Id");
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Shift,String> date = new TableColumn<>("Acqua");
-        date.setCellValueFactory(new PropertyValueFactory<>("water"));
-        TableColumn<Shift,Integer> startingTime = new TableColumn<>("Livello luce");
-        startingTime.setCellValueFactory(new PropertyValueFactory<>("light"));
-        TableColumn<Shift,String> endTime = new TableColumn<>("Concime");
-        endTime.setCellValueFactory(new PropertyValueFactory<>("fertilizer"));
+        TableColumn<Shift,Integer> id = new TableColumn<>("Codice reparto");
+        id.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
+        TableColumn<Shift,String> date = new TableColumn<>("Data");
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TableColumn<Shift,Integer> startingTime = new TableColumn<>("Ora inizio");
+        startingTime.setCellValueFactory(new PropertyValueFactory<>("startingTime"));
+        TableColumn<Shift,String> endTime = new TableColumn<>("Ora fine");
+        endTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         employeeView.getColumns().addAll(id,date,startingTime,endTime);
         employeeView.setItems(features.viewNextShift(Integer.parseInt(employeeID.getText())));
     }

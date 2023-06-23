@@ -25,14 +25,15 @@ import javafx.collections.ObservableList;
 
 public class FeaturesImpl implements Features {
 
-    private final Connection connection; 
+    private static final Date TODAY = Utils.buildDate("20/06/2023").get();
+    private final Connection connection;
 
     public FeaturesImpl(Connection connection){
         this.connection = connection;
     }
 
     @Override
-    public void addEmployee(String FirstName,String LastName,String CF,float income, Date employment_date) {
+    public void addEmployee(String FirstName, String LastName, String CF, float income, Date employment_date) {
         final String query = "INSERT INTO Impiegato" +
                                 "(nome, cognome, CF, stipendio, data_assunzione, id_imp)" + 
                                 " VALUES (?,?,?,?,?,?)";
@@ -269,7 +270,7 @@ public class FeaturesImpl implements Features {
                 "LIMIT 1";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
-            statement.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+            statement.setDate(2, Utils.dateToSqlDate(TODAY));
             final ResultSet result = statement.executeQuery();
             
             final ObservableList<Shift> data = FXCollections.observableArrayList();
