@@ -30,7 +30,7 @@ public class FeaturesImpl implements Features {
 
     public FeaturesImpl(){
         String username = "root";
-        String password = "Delta?Velorum1";
+        String password = "";
 
         String dbName = "plantnursery";
         ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
@@ -428,10 +428,12 @@ public class FeaturesImpl implements Features {
     }
 
     private int getNext(String table_name, String column) {
-        String query = "SELECT MAX("+ column + ") FROM " + table_name;
+        String query = "SELECT MAX(?) FROM ?";
         System.out.println(query);
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, column);
+            statement.setString(2,table_name);
+             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt(1) + 1;
             } else {
