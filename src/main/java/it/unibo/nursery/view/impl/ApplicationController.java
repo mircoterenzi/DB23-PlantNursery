@@ -1,5 +1,6 @@
 package it.unibo.nursery.view.impl;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -54,8 +55,8 @@ public class ApplicationController {
     
     private Features features;
 
-    public ApplicationController() {
-        features = new FeaturesImpl();
+    public ApplicationController(Connection connection) {
+        features = new FeaturesImpl(connection);
     }
 
     @FXML

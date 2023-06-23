@@ -12,7 +12,6 @@ import java.util.Collection;
 
 import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.CarePlan;
-import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.db.PlantCure;
@@ -29,13 +28,8 @@ public class FeaturesImpl implements Features {
 
     private final Connection connection; 
 
-    public FeaturesImpl(){
-        String username = "root";
-        String password = "";
-
-        String dbName = "plantnursery";
-        ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
-        connection = prov.getMySQLConnection();
+    public FeaturesImpl(Connection connection){
+        this.connection = connection;
     }
 
     @Override

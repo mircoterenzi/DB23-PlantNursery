@@ -1,5 +1,7 @@
 package it.unibo.nursery.view.api;
 
+import java.sql.Connection;
+
 public interface AppView {
 
     /**
@@ -10,5 +12,5 @@ public interface AppView {
     /**
      * Set the Application scene.
      */
-    public void setApplicationScene();
+    public void setApplicationScene(Connection connection);
 }

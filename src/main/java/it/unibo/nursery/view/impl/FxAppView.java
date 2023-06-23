@@ -1,6 +1,7 @@
 package it.unibo.nursery.view.impl;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import it.unibo.nursery.view.api.AppView;
 import javafx.fxml.FXMLLoader;
@@ -41,10 +42,10 @@ public class FxAppView implements AppView {
      * {@inheritDoc}}
      */
     @Override
-    public void setApplicationScene() {
+    public void setApplicationScene(Connection connection) {
         try {
             final var loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/Application.fxml"));
-            loader.setController(new ApplicationController());
+            loader.setController(new ApplicationController(connection));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
             stage.setScene(scene);
