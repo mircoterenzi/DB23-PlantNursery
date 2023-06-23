@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.mysql.cj.util.Util;
-
 import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.model.Features;
@@ -85,11 +83,13 @@ public class DocumentController {
         if (isAPlant) {
             type.setPromptText("Nome scientifico");
             changeProductButton.setText("Voglio inserire un accessorio");
+            price.setVisible(true);
             height.setVisible(true);
             width.setVisible(true);
         } else {
             type.setPromptText("Tipo accessorio");
             changeProductButton.setText("Voglio inserire una pianta");
+            price.setVisible(false);
             height.setVisible(false);
             width.setVisible(false);
         }

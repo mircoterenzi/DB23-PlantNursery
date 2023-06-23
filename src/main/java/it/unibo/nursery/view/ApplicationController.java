@@ -1,7 +1,5 @@
 package it.unibo.nursery.view;
 
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +7,11 @@ import java.util.Optional;
 import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.PlantCure;
+import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
+import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.Features;
-import it.unibo.nursery.model.FeaturesImpl;
 import it.unibo.nursery.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -43,6 +42,7 @@ public class ApplicationController {
     @FXML private TextField productID;
     @FXML private TextField plantTypeID;
     @FXML private TextField plantTreatmentID;
+    @FXML private TextField plantToSearchID;
     @FXML private TableView plantView;
     @FXML private TextField shiftDate;
     @FXML private TextField shiftEndTime;
@@ -107,7 +107,13 @@ public class ApplicationController {
 
     @FXML
     void viewBestSellersOnClick(ActionEvent event) {
-        //TODO
+        statView.getColumns().clear();
+        TableColumn<PlantSold,Integer> sold = new TableColumn<>("Nome");
+        sold.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<PlantSold,String> quantity = new TableColumn<>("Unità vendute");
+        quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        statView.getColumns().addAll(sold,quantity);
+        statView.setItems(features.viewBestSelling(statStartingDate.getText(), statEndDate.getText()));
     }
 
     @FXML
@@ -126,7 +132,7 @@ public class ApplicationController {
         TableColumn<CarePlan,String> maxTemp = new TableColumn<>("Temperatura max");
         maxTemp.setCellValueFactory(new PropertyValueFactory<>("maxTemp"));
         plantView.getColumns().addAll(id,water,light,fertilizer,minTemp,maxTemp);
-        plantView.setItems(features.viewCarePlan(Integer.parseInt(productID.getText())));
+        plantView.setItems(features.viewCarePlan(Integer.parseInt(plantToSearchID.getText())));
     }
 
     @FXML
@@ -175,17 +181,29 @@ public class ApplicationController {
 
     @FXML
     void viewNextShiftOnClick(ActionEvent event) {
-        //TODO
+        employeeView.getColumns().clear();
+        TableColumn<Shift,Integer> id = new TableColumn<>("Id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Shift,String> date = new TableColumn<>("Acqua");
+        date.setCellValueFactory(new PropertyValueFactory<>("water"));
+        TableColumn<Shift,Integer> startingTime = new TableColumn<>("Livello luce");
+        startingTime.setCellValueFactory(new PropertyValueFactory<>("light"));
+        TableColumn<Shift,String> endTime = new TableColumn<>("Concime");
+        endTime.setCellValueFactory(new PropertyValueFactory<>("fertilizer"));
+        employeeView.getColumns().addAll(id,date,startingTime,endTime);
+        employeeView.setItems(features.viewNextShift(Integer.parseInt(employeeID.getText())));
     }
 
     @FXML
     void viewProductsOnClick(ActionEvent event) {
-        //TODO
+        TableColumn<String, String> name = new TableColumn<>("Nome");
+        employeeView.getColumns().addAll(name);
+        employeeView.setItems(features.viewProducts(Integer.parseInt(productID.getText())));
     }
 
     @FXML
     void viewSuppliersOnClick(ActionEvent event) {
-        showSuppliers(plantView, features.viewSuppliers(Integer.parseInt(productID.getText())));
+        showSuppliers(plantView, features.viewSuppliers(productID.getText()));
     }
 
     @FXML

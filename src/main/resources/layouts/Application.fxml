@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane prefHeight="547.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane prefHeight="626.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab closable="false" text="Prodotti">
         <content>
@@ -24,13 +24,17 @@
                         <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una tipologia di prodotto" wrappingWidth="193.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="productID" prefHeight="25.0" prefWidth="190.0" promptText="Nome" />
+                        <TextField fx:id="productID" prefHeight="25.0" prefWidth="190.0" promptText="Nome prodotto" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#viewSuppliersOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza fornitori">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una pianta" wrappingWidth="193.68119748737445" />
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <TextField fx:id="plantToSearchID" prefHeight="25.0" prefWidth="190.0" promptText="ID pianta" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#viewCarePlanOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza piano di cura">
                            <font>
@@ -72,7 +76,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <TableView fx:id="plantView" />
+                  <TableView fx:id="plantView" prefHeight="612.0" prefWidth="645.0" />
                </center>
             </BorderPane>
         </content>
@@ -139,7 +143,7 @@
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <TextField fx:id="employeeID" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button mnemonicParsing="false" onAction="#viewNextShiftOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza i prossimi turni" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                        <Button mnemonicParsing="false" onAction="#viewNextShiftOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza il prossimo turno" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>
