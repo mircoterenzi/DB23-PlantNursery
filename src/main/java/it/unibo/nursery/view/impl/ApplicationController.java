@@ -1,10 +1,16 @@
 package it.unibo.nursery.view.impl;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import it.unibo.nursery.db.CarePlan;
+import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.model.impl.FeaturesImpl;
 import it.unibo.nursery.utils.Utils;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 
 public class ApplicationController {
 
@@ -37,7 +44,7 @@ public class ApplicationController {
     @FXML private TextField shiftStartingTime;
     @FXML private TextField statEndDate;
     @FXML private TextField statStartingDate;
-    @FXML private TableView statView;
+    @FXML private Pane statView;
     @FXML private TextField supplierID;
     @FXML private TextField supplierName;
     @FXML private TableView supplierView;
@@ -110,16 +117,42 @@ public class ApplicationController {
 
     @FXML
     void viewMoreTreatedOnClick(ActionEvent event) {
-        /* 
         Optional<Date> start = Utils.buildDate(statStartingDate.getText());
         Optional<Date> end = Utils.buildDate(statEndDate.getText());
-        if( end.isPresent() && start.isPresent()){
-            ResultTable res = features.viewMoreTreated(start.get(),end.get());
+        TableView<PlantCure> sView =  new TableView<>();
+        var titles = List.of("plant", "type", "days in care", "water expected", "water given", "fertilizer expected", "fertilizer given");
+        if (end.isPresent() && start.isPresent()) {
+            ObservableList<PlantCure> values = features.viewMoreTreated(start.get(), end.get());
             statStartingDate.clear();
             statEndDate.clear();
-            statView.setText(res.getTableToString());
+            sView.setItems(values);
+            sView.getColumns().clear(); // Clear existing columns before adding new ones
+
+            for (int i = 0; i < titles.size(); i++) {
+                TableColumn<PlantCure, String> column = new TableColumn<>(titles.get(i));
+                int columnIndex = i;
+
+                column.setCellValueFactory(cellData -> {
+                    PlantCure plantCure = cellData.getValue();
+                    String cellValue = switch (columnIndex) {
+                        case 0 -> String.valueOf(plantCure.getId_prodotto());
+                        case 1 -> plantCure.getScientificName();
+                        case 2 -> String.valueOf(plantCure.getDays_in_care());
+                        case 3 -> String.valueOf(plantCure.getExpected_water());
+                        case 4 -> String.valueOf(plantCure.getGiven_water());
+                        case 5 -> String.valueOf(plantCure.getExpected_fertilizer());
+                        case 6 -> String.valueOf(plantCure.getGiven_fertilizer());
+                        default -> null;
+                    };
+                    return new SimpleStringProperty(cellValue);
+                });
+
+                sView.getColumns().add(column);
+            }
+            statView.getChildren().clear();
+            statView.getChildren().add(sView);
+            sView.setVisible(true);
         }
-        */
     }
 
     @FXML

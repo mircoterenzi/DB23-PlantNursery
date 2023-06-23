@@ -7,6 +7,7 @@ import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
+import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantType;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
@@ -78,5 +79,5 @@ public interface Features {
      * View plants that have been treated more than indicated in their care plan 
      * in the range of dates considered or the time in storage during that timeframe.
      */
-    public ObservableList<Plant> viewMoreTreated(Date from, Date to);
+    public ObservableList<PlantCure> viewMoreTreated(Date from, Date to);
 }

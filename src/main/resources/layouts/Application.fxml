@@ -189,7 +189,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <TableView fx:id="statView" prefHeight="596.0" prefWidth="568.0" />
+                  <FlowPane fx:id="statView" prefHeight="596.0" prefWidth="568.0" />
                </center>
             </BorderPane>
         </content>

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,9 +16,9 @@ import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.ConnectionProvider;
 import it.unibo.nursery.db.Plant;
+import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
-import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,7 @@ public class FeaturesImpl implements Features {
 
     public FeaturesImpl(){
         String username = "root";
-        String password = "raparossa";
+        String password = "Delta?Velorum1";
 
         String dbName = "plantnursery";
         ConnectionProvider prov = new ConnectionProvider( username, password, dbName);
@@ -317,10 +318,10 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ResultTable viewMoreTreated(Date from, Date to) {
+    public ObservableList<PlantCure> viewMoreTreated(Date from, Date to) {
         this.createDatesView( from, to);
         this.createCureCountView(from, to);
-        final String query = "SELECT P.id_prodotto, DATEDIFF(L.care_end, L.care_start) AS days_in_care, " +
+        final String query = "SELECT P.id_prodotto, T.nome_scientifico, DATEDIFF(L.care_end, L.care_start) AS days_in_care, " +
                "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.acqua) AS expected_acqua, C.water_count, " +
                "FLOOR(DATEDIFF(L.care_end, L.care_start) / N.concime) AS expected_concime, " +
                "C.concime_count " +
@@ -333,21 +334,18 @@ public class FeaturesImpl implements Features {
                "OR DATEDIFF(L.care_end, L.care_start) / N.acqua < C.concime_count;";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             final ResultSet result = statement.executeQuery();
-            ResultTable table = new ResultTableImpl(List.of("plant","days in care",
-                                                            "water expected","water given",
-                                                            "fertilizer expected","fertilizer given"));
+            ObservableList<PlantCure> list = FXCollections.observableList(new LinkedList<PlantCure>());
             while(result.next()){
-                List<String> line = new ArrayList<>();
-                line.add(Integer.toString(result.getInt("id_prodotto")));
-                line.add(Integer.toString(result.getInt("days_in_care")));
-                line.add(Integer.toString(result.getInt("expected_acqua")));
-                line.add(Integer.toString(result.getInt("water_count")));
-                line.add(Integer.toString(result.getInt("expected_concime")));
-                line.add(Integer.toString(result.getInt("concime_count")));
-                table.addLine(line);
+                PlantCure plant = new PlantCure(result.getInt("id_prodotto"),
+                                                    result.getString("nome_scientifico"),
+                                                    result.getInt("days_in_care"),
+                                                    result.getInt("expected_acqua"),
+                                                    result.getInt("water_count"),
+                                                    result.getInt("expected_concime"),
+                                                    result.getInt("concime_count"));
+                list.add(plant);
             }
-            System.out.println(table.getTableToString());
-            return table;
+            return list;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
