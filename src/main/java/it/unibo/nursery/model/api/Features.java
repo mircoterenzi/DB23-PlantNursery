@@ -9,6 +9,7 @@ import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
 import javafx.collections.ObservableList;
@@ -16,7 +17,7 @@ import javafx.collections.ObservableList;
 public interface Features {
 
     public ObservableList<Supplier> viewAllSuppliers();
-    public ObservableList<Plant> viewAllPlants();
+    public ObservableList<Product> viewAllPlants();
     public ObservableList<Employee> viewAllEmployees();
     /**
      * Insert an employee in the database.

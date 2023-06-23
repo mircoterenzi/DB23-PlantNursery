@@ -17,6 +17,7 @@ import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
@@ -499,20 +500,25 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<Plant> viewAllPlants() {
-        final String query = "SELECT * from Pianta";
+    public ObservableList<Product> viewAllPlants() {
+        final String query = "SELECT id_prodotto, nome AS tipo, " +
+                            "prezzo, descrizione " +
+                            "FROM Pianta " +
+                            "WHERE id_scontrino IS NULL " +
+                            "UNION ALL " +
+                            "SELECT A.id_prodotto, A.tipo, " +
+                            "T.prezzo, A.descrizione " +
+                            "FROM Accessorio A, Tipo_accessorio T " +
+                            "WHERE A.tipo = T.nome_tipo AND id_scontrino IS NULL;";
+;
         try( Statement statement = connection.createStatement()){
             ResultSet result = statement.executeQuery(query);
-            ObservableList<Plant> list = FXCollections.observableArrayList();
+            ObservableList<Product> list = FXCollections.observableArrayList();
             while(result.next()){
-               Plant supp = new Plant( result.getInt("id_prodotto"),
-                                        result.getString("descrizione"),
-                                        result.getString("nome"),
-                                        result.getFloat("larghezza_vaso"),
-                                        result.getFloat("altezza"),
+               Product supp = new Product( result.getInt("id_prodotto"),
+                                        result.getString("tipo"),
                                         result.getFloat("prezzo"),
-                                        result.getInt("id_fattura"),
-                                        result.getInt("id_scontrino"));
+                                        result.getString("descrizione"));
                 list.add(supp);
             }
             return list;
