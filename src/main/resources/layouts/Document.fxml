@@ -33,7 +33,7 @@
                   <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                   <Button mnemonicParsing="false" onAction="#addToInvoiceOnClick" prefHeight="25.0" prefWidth="206.0" text="Aggiungi in fattura" />
                   <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
-                  <Button mnemonicParsing="false" onAction="#completeInvoiceOnClick" prefHeight="25.0" prefWidth="206.0" text="Completa lo scontrino" />
+                  <Button mnemonicParsing="false" onAction="#completeInvoiceOnClick" prefHeight="25.0" prefWidth="206.0" text="Completa la fattura" />
                </children>
             </FlowPane>
          </content>
@@ -45,7 +45,8 @@
                   <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci i dati per lo scontrino" textAlignment="CENTER" />
                   <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                  <TextField fx:id="dateReceipt" promptText="Data (dd/mm/yyyy)" />
+                  <TextField fx:id="dateReceipt" promptText="Data (dd/mm/yyyy)" /><Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="employeeID" promptText="Impiegato" />
                   <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il prodotto" textAlignment="CENTER" />
                   <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />

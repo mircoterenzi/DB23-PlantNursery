@@ -167,7 +167,7 @@ public class FeaturesImpl implements Features {
             throw new IllegalArgumentException("invalid parameters for applyDiscount");
         }
 
-        final String query = "UPDATE Pianta SET prezzo = prezzo *?" + 
+        final String query = "UPDATE Pianta SET prezzo = prezzo *? " + 
                             "WHERE nome = '?' )";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, 1-discount/100);
@@ -449,10 +449,10 @@ public class FeaturesImpl implements Features {
     }
 
     private int nextId_prod(){
-        String query = "SELECT MAX(id_prodotto) AS max_id_prodotto" + 
-            "FROM ( SELECT id_prodotto FROM Pianta"+
-            "UNION ALL" +
-            "SELECT id_prodotto FROM Accessorio" +
+        String query = "SELECT MAX(id_prodotto) AS max_id_prodotto " + 
+            "FROM ( SELECT id_prodotto FROM Pianta "+
+            "UNION ALL " +
+            "SELECT id_prodotto FROM Accessorio " +
             ") AS merged_tables";
 
             try (Statement statement = connection.createStatement();
@@ -468,10 +468,10 @@ public class FeaturesImpl implements Features {
     }
 
     private int nextId_doc(){
-        String query = "SELECT MAX(id_documento) AS max_id_documento" + 
-            "FROM ( SELECT id_documento FROM Scontrino"+
-            "UNION ALL" +
-            "SELECT id_documento FROM Fattura" +
+        String query = "SELECT MAX(id_documento) AS max_id_documento " + 
+            "FROM ( SELECT id_documento FROM Scontrino "+
+            "UNION ALL " +
+            "SELECT id_documento FROM Fattura " +
             ") AS merged_tables";
 
             try (Statement statement = connection.createStatement();
