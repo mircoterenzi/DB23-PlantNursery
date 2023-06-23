@@ -54,6 +54,8 @@
                         </Button>
                         <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
                         <TextField fx:id="dateTreatment" promptText="Data  (dd/mm/yyyy)" />
+                        <TextField fx:id="plantTreatmentID" promptText="ID pianta" />
+                        <TextField fx:id="employeeTreatmentID" promptText="ID dipendente" />
                         <CheckBox fx:id="fertilizer" mnemonicParsing="false" text="Fertilizzante" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#addTreatmentOnClick" prefHeight="25.0" prefWidth="200.0" text="Aggiungi cura effettuata" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">

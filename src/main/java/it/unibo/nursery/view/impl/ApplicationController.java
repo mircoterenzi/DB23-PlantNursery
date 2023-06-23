@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.nursery.db.CarePlan;
+import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
@@ -33,11 +34,13 @@ public class ApplicationController {
     @FXML private TextField employeeName;
     @FXML private TextField employeeSalary;
     @FXML private TextField employeeSurname;
+    @FXML private TextField employeeTreatmentID;
     @FXML private TableView employeeView;
     @FXML private CheckBox fertilizer;
     @FXML private TextField hireDate;
     @FXML private TextField plantID;
     @FXML private TextField plantTypeID;
+    @FXML private TextField plantTreatmentID;
     @FXML private TableView plantView;
     @FXML private TextField shiftDate;
     @FXML private TextField shiftEndTime;
@@ -78,12 +81,18 @@ public class ApplicationController {
 
     @FXML
     void addTreatmentOnClick(ActionEvent event) {
-
+        features.addTreatment(
+                Integer.parseInt(plantTreatmentID.getText()),
+                Integer.parseInt(employeeTreatmentID.getText()),
+                dateTreatment.getText(),
+                fertilizer.isSelected());
     }
 
     @FXML
     void applyDiscountOnClick(ActionEvent event) {
-        
+        features.applyDiscount(
+                plantTypeID.getText(),
+                Integer.parseInt(discount.getText()));
     }
 
     @FXML
@@ -112,7 +121,10 @@ public class ApplicationController {
 
     @FXML
     void viewEmployeesOnShiftOnClick(ActionEvent event) {
-
+        showEmployee(employeeView, features.viewOnShift(
+                shiftDate.getText(), 
+                Integer.parseInt(shiftStartingTime.getText()), 
+                Integer.parseInt(shiftEndTime.getText())));
     }
 
     @FXML
@@ -167,7 +179,7 @@ public class ApplicationController {
 
     @FXML
     void viewSuppliersOnClick(ActionEvent event) {
-        showSuppliers(plantView, features.viewProducts(Integer.parseInt(plantID.getText())));
+        showSuppliers(plantView, features.viewSuppliers(Integer.parseInt(plantID.getText())));
     }
 
     private void showSuppliers(TableView<Supplier> view, ObservableList<Supplier> data) {
@@ -177,6 +189,24 @@ public class ApplicationController {
         TableColumn<Supplier,String> name = new TableColumn<>("Nome");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         view.getColumns().addAll(id, name);
+        view.setItems(data);
+    }
+
+    private void showEmployee(TableView<Employee> view, ObservableList<Employee> data) {
+        view.getColumns().clear();
+        TableColumn<Employee,String> id = new TableColumn<>("Id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Employee,Integer> name = new TableColumn<>("Nome");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Employee,String> surname = new TableColumn<>("Cognome");
+        surname.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        TableColumn<Employee,Integer> taxCode = new TableColumn<>("CF");
+        taxCode.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
+        TableColumn<Employee,String> salary = new TableColumn<>("Stipendio");
+        salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        TableColumn<Employee,Integer> employmentDate = new TableColumn<>("Data assunzione");
+        employmentDate.setCellValueFactory(new PropertyValueFactory<>("employmentDate"));
+        view.getColumns().addAll(id, name, surname, taxCode, salary, employmentDate);
         view.setItems(data);
     }
 }
