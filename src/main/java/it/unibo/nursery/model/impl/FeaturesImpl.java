@@ -101,6 +101,16 @@ public class FeaturesImpl implements Features {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         } 
+        final String query2 = "UPDATE pianta SET id_scontrino = ? WHERE id_prodotto = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query2)) {
+            statement.setInt(1, id_receipt);
+            statement.setInt(2, id_prod);
+            statement.executeUpdate();
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(e);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        } 
     }
 
     @Override
@@ -122,7 +132,7 @@ public class FeaturesImpl implements Features {
     }
 
     private void addAccessory(Accessory p, int id_invoice) {
-        final String query = "INSERT INTO Accessorio (id_prodotto, descrizione, id_fattura, id_scontrino, tipo)\n" + 
+        final String query = "INSERT INTO Accessorio (id_prodotto, descrizione, id_fattura, id_scontrino, tipo) " + 
                 "VALUES(?,?,?,NULL,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, this.nextId_prod());
