@@ -8,7 +8,7 @@ import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.db.PlantCure;
-import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
@@ -47,12 +47,12 @@ public interface Features {
     /**
      * View all suppliers for a given product.
      */
-    public ObservableList<Supplier> viewSuppliers(int id);
+    public ObservableList<Supplier> viewSuppliers(String type);
 
     /**
      * View all products available from a given supplier.
      */
-    public ObservableList<Supplier> viewProducts(int id);
+    public ObservableList<String> viewProducts(int id);
 
     /**
      * View the care plan for a plant.
@@ -77,7 +77,7 @@ public interface Features {
     /**
      * Display the best-selling plants in a given period.
      */
-    public ObservableList<PlantType> viewBestSelling(String from, String to);
+    public ObservableList<PlantSold> viewBestSelling(String from, String to);
 
      /**
      * View plants that have been treated more than indicated in their care plan 

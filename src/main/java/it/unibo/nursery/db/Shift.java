@@ -7,14 +7,12 @@ public class Shift {
     private Date date;
     private int startingTime;
     private int endTime;
-    private int id;
 
-    public Shift(int departmentId, Date date, int startingTime, int endTime, int id) {
+    public Shift(int departmentId, Date date, int startingTime, int endTime) {
         this.departmentId = departmentId;
         this.date = date;
         this.startingTime = startingTime;
         this.endTime = endTime;
-        this.id = id;
     }
 
     public int getDepartmentId() {
@@ -31,10 +29,6 @@ public class Shift {
 
     public int getEndTime() {
         return endTime;
-    }
-
-    public int getId() {
-        return id;
     }
 
 }

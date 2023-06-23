@@ -15,7 +15,7 @@ import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
 import it.unibo.nursery.db.PlantCure;
-import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
@@ -181,14 +181,15 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<Supplier> viewSuppliers(int id) {
+    public ObservableList<Supplier> viewSuppliers(String type) {
         final String query = "SELECT DISTINCT F.* " + 
-                "FROM Pianta P, Accessorio A, Fornitore F, Fattura Ft " + 
-                "WHERE ((P.id_prodotto = ? AND P.id_fattura = Ft.id_documento) OR (A.id_prodotto = ? AND A.id_fattura = Ft.id_documento)) " + 
-                "AND Ft.id_fornitore = F.id_fornitore";
+                "FROM Fornitore F, Accessorio A, Pianta P, Fattura FT " + 
+                "WHERE F.id_fornitore = FT.id_fornitore " + 
+                "AND ((FT.id_documento = P.id_fattura AND P.nome = ?) " +
+                "       OR (FT.id_documento = A.id_fattura AND A.tipo = ?))";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.setInt(2, id);
+            statement.setString(1, type);
+            statement.setString(2, type);
             final ResultSet result = statement.executeQuery();
             
             final ObservableList<Supplier> data = FXCollections.observableArrayList();
@@ -203,18 +204,24 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<Supplier> viewProducts(int id) {
-        final String query = "SELECT DISTINCT id_fornitore, nome " +
-                "FROM Pianta, Fattura " +
-                "WHERE id_fattura = id_documento " +
-                "AND id_fornitore = ?";
+    public ObservableList<String> viewProducts(int id) {
+        final String query = "SELECT DISTINCT nome " +
+                "FROM Pianta P, Fattura FT " +
+                "WHERE P.id_fattura = FT.id_documento " +
+                "AND FT.id_fornitore = ? " +
+                "UNION ALL " +
+                "SELECT DISTINCT tipo AS nome " +
+                "FROM Accessorio A, Fattura FT " +
+                "WHERE A.id_fattura = FT.id_documento " +
+                "AND FT.id_fornitore = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
+            statement.setInt(2, id);
             final ResultSet result = statement.executeQuery();
 
-            final ObservableList<Supplier> data = FXCollections.observableArrayList();
+            final ObservableList<String> data = FXCollections.observableArrayList();
             while (result.next()) {
-                data.add(new Supplier(result.getInt("id_fornitore"), result.getString("nome")));
+                data.add(result.getString("nome"));
             }
             return data;
 
@@ -225,8 +232,8 @@ public class FeaturesImpl implements Features {
 
     @Override
     public ObservableList<CarePlan> viewCarePlan(int id) {
-        final String query = "SELECT Piano.* " + 
-                "FROM Piano_di_Cura Piano, Pianta P, Tipo_pianta T " + 
+        final String query = "SELECT PCura.* " +
+                "FROM Piano_di_Cura PCura, Pianta P, Tipo_pianta T " +
                 "WHERE ? = P.id_prodotto " +
                 "AND P.nome = T.nome_scientifico " +
                 "AND T.piano = id_piano";
@@ -254,7 +261,7 @@ public class FeaturesImpl implements Features {
 
     @Override
     public ObservableList<Shift> viewNextShift(int id) {
-        final String query = "SELECT cod_reparto, data, ora_inizio, ora_fine " +
+        final String query = "SELECT * " +
                 "FROM Turno " +
                 "WHERE id_imp = ? " +
                 "AND data > ? " +
@@ -271,8 +278,7 @@ public class FeaturesImpl implements Features {
                         result.getInt("cod_reparto"),
                         Utils.sqlDateToDate(result.getDate("data")),
                         result.getInt("ora_inizio"),
-                        result.getInt("ora_fine"),
-                        result.getInt("id_imp")
+                        result.getInt("ora_fine")
                 ));
             }
             return data;
@@ -284,17 +290,19 @@ public class FeaturesImpl implements Features {
 
     @Override
     public ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime) {
-        final String query = "SELECT I.* " + 
-                "FROM Turno T, Impiegato I " + 
+        final String query = "SELECT I.* " +
+                "FROM Turno T, Impiegato I " +
                 "WHERE T.id_imp = I.id_imp " +
-                "AND (ora_inizio >= ? OR ora_fine <= ?) " +
-                "AND data = ?";
+                "AND data = ? " +
+                "AND ((ora_inizio >= ? AND ora_inizio < ?) OR " +
+                "    (ora_fine > ? AND ora_fine <= ?))";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, startingTime);
-            statement.setInt(2, endTime);
-            statement.setDate(3, Utils.dateToSqlDate(Utils.buildDate(date).get()));
+            statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(date).get()));
+            statement.setInt(2, startingTime);
+            statement.setInt(3, endTime);
+            statement.setInt(4, startingTime);
+            statement.setInt(5, endTime);            
             final ResultSet result = statement.executeQuery();
-            
             final ObservableList<Employee> data = FXCollections.observableArrayList();
             while (result.next()) {
                 data.add(new Employee(
@@ -307,7 +315,6 @@ public class FeaturesImpl implements Features {
                 ));
             }
             return data;
-
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -315,7 +322,7 @@ public class FeaturesImpl implements Features {
 
     @Override
     public void addTreatment(int plantID, int employeeID, String date, boolean fertilizer) {
-        final String query = "INSERT INTO Cura (pianta, data, id_imp, concime) " + 
+        final String query = "INSERT INTO Cura " + 
                 "VALUES (?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, plantID);
@@ -328,7 +335,7 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<PlantType> viewBestSelling(String from, String to) {
+    public ObservableList<PlantSold> viewBestSelling(String from, String to) {
         final String query = "SELECT nome, COUNT(*) AS num_piante " +
                 "FROM Pianta, Scontrino " +
                 "WHERE id_scontrino = id_documento " +
@@ -340,12 +347,11 @@ public class FeaturesImpl implements Features {
             statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(from).get()));
             statement.setDate(2, Utils.dateToSqlDate(Utils.buildDate(to).get()));
             final ResultSet result = statement.executeQuery();
-            final ObservableList<PlantType> data = FXCollections.observableArrayList();
+            final ObservableList<PlantSold> data = FXCollections.observableArrayList();
             while (result.next()) {
-                data.add(new PlantType(
-                        result.getString("nome_scientifico"),
-                        result.getInt("piano"),
-                        result.getInt("reparto")
+                data.add(new PlantSold(
+                        result.getString("nome"),
+                        result.getInt("num_piate")
                 ));
             }
             return data;
