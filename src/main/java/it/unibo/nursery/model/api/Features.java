@@ -15,6 +15,9 @@ import javafx.collections.ObservableList;
 
 public interface Features {
 
+    public ObservableList<Supplier> viewAllSuppliers();
+    public ObservableList<Plant> viewAllPlants();
+    public ObservableList<Employee> viewAllEmployees();
     /**
      * Insert an employee in the database.
      */
