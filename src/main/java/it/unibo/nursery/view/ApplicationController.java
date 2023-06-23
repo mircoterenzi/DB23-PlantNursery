@@ -1,6 +1,7 @@
 package it.unibo.nursery.view;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -226,9 +227,9 @@ public class ApplicationController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         TableColumn<Product,Integer> description = new TableColumn<>("Descrizione");
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        TableColumn<Product,String> price = new TableColumn<>("Id");
+        TableColumn<Product,String> price = new TableColumn<>("Price");
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        TableColumn<Product,Integer> type = new TableColumn<>("Descrizione");
+        TableColumn<Product,Integer> type = new TableColumn<>("Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         view.getColumns().addAll(id, description, price, type);
         view.setItems(data);
