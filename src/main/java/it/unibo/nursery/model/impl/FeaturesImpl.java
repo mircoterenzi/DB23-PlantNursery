@@ -500,7 +500,7 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<Product> viewAllPlants() {
+    public ObservableList<Product> viewAllProducts() {
         final String query = "SELECT id_prodotto, nome AS tipo, " +
                             "prezzo, descrizione " +
                             "FROM Pianta " +
@@ -529,7 +529,7 @@ public class FeaturesImpl implements Features {
 
     @Override
     public ObservableList<Employee> viewAllEmployees() {
-        final String query = "SELECT * from Pianta";
+        final String query = "SELECT * from Impiegato";
         try( Statement statement = connection.createStatement()){
             ResultSet result = statement.executeQuery(query);
             ObservableList<Employee> list = FXCollections.observableArrayList();
