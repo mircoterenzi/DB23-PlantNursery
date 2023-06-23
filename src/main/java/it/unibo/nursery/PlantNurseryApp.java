@@ -1,6 +1,6 @@
 package it.unibo.nursery;
 
-import it.unibo.nursery.view.impl.FxAppView;
+import it.unibo.nursery.view.FxAppView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
