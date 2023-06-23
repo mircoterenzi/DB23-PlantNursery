@@ -258,8 +258,19 @@ public class FeaturesImpl implements Features {
             statement.setInt(1, id);
             statement.setDate(2, new java.sql.Date(System.currentTimeMillis()));
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
-            return null;
+            
+            final ObservableList<Shift> data = FXCollections.observableArrayList();
+            while (result.next()) {
+                data.add(new Shift(
+                        result.getInt("cod_reparto"),
+                        Utils.sqlDateToDate(result.getDate("data")),
+                        result.getInt("ora_inizio"),
+                        result.getInt("ora_fine"),
+                        result.getInt("id_imp")
+                ));
+            }
+            return data;
+
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -267,7 +278,7 @@ public class FeaturesImpl implements Features {
 
     @Override
     public ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime) {
-        final String query = "SELECT I.id_imp, nome, cognome, ora_inizio, ora_fine " + 
+        final String query = "SELECT I.* " + 
                 "FROM Turno T, Impiegato I " + 
                 "WHERE T.id_imp = I.id_imp " +
                 "AND (ora_inizio >= ? OR ora_fine <= ?) " +
@@ -323,8 +334,15 @@ public class FeaturesImpl implements Features {
             statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(from).get()));
             statement.setDate(2, Utils.dateToSqlDate(Utils.buildDate(to).get()));
             final ResultSet result = statement.executeQuery();
-            
-            return null;
+            final ObservableList<PlantType> data = FXCollections.observableArrayList();
+            while (result.next()) {
+                data.add(new PlantType(
+                        result.getString("nome_scientifico"),
+                        result.getInt("piano"),
+                        result.getInt("reparto")
+                ));
+            }
+            return data;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
