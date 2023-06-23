@@ -482,4 +482,64 @@ public class FeaturesImpl implements Features {
         }
     }
 
+    @Override
+    public ObservableList<Supplier> viewAllSuppliers() {
+       final String query = "SELECT * from Fornitore";
+        try( Statement statement = connection.createStatement()){
+            ResultSet result = statement.executeQuery(query);
+            ObservableList<Supplier> list = FXCollections.observableArrayList();
+            while(result.next()){
+                Supplier supp = new Supplier(result.getInt("id_fornitore"), result.getString("nome"));
+                list.add(supp);
+            }
+            return list;
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public ObservableList<Plant> viewAllPlants() {
+        final String query = "SELECT * from Pianta";
+        try( Statement statement = connection.createStatement()){
+            ResultSet result = statement.executeQuery(query);
+            ObservableList<Plant> list = FXCollections.observableArrayList();
+            while(result.next()){
+               Plant supp = new Plant( result.getInt("id_prodotto"),
+                                        result.getString("descrizione"),
+                                        result.getString("nome"),
+                                        result.getFloat("larghezza_vaso"),
+                                        result.getFloat("altezza"),
+                                        result.getFloat("prezzo"),
+                                        result.getInt("id_fattura"),
+                                        result.getInt("id_scontrino"));
+                list.add(supp);
+            }
+            return list;
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
+    public ObservableList<Employee> viewAllEmployees() {
+        final String query = "SELECT * from Pianta";
+        try( Statement statement = connection.createStatement()){
+            ResultSet result = statement.executeQuery(query);
+            ObservableList<Employee> list = FXCollections.observableArrayList();
+            while(result.next()){
+               Employee supp = new Employee( result.getString("nome"),
+                                        result.getString("cognome"),
+                                        result.getString("cf"),
+                                        result.getFloat("stipendio"),
+                                        Utils.sqlDateToDate(result.getDate("data_assunzione")),
+                                        result.getInt("id_imp"));
+                list.add(supp);
+            }
+            return list;
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }
