@@ -1,31 +1,31 @@
 package it.unibo.nursery.db;
 
 public class Product {
-    private int id_prodotto;
-    private String tipo;
-    private float prezzo;
-    private String descrizione;
+    private int id;
+    private String type;
+    private float price;
+    private String description;
     
-    public Product(int id_prodotto, String tipo, float prezzo, String descrizione) {
-        this.id_prodotto = id_prodotto;
-        this.tipo = tipo;
-        this.prezzo = prezzo;
-        this.descrizione = descrizione;
+    public Product(int id, String type, float price, String description) {
+        this.id = id;
+        this.type = type;
+        this.price = price;
+        this.description = description;
     }
     
-    public int getId_prodotto() {
-        return id_prodotto;
+    public int getId() {
+        return id;
     }
     
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
     
-    public float getPrezzo() {
-        return prezzo;
+    public float getPrice() {
+        return price;
     }
     
-    public String getDescrizione() {
-        return descrizione;
+    public String getDescription() {
+        return description;
     }
 }
