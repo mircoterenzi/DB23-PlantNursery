@@ -1,4 +1,4 @@
-package it.unibo.nursery.model.impl;
+package it.unibo.nursery.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,6 @@ import it.unibo.nursery.db.PlantType;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
-import it.unibo.nursery.model.api.Features;
 import it.unibo.nursery.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

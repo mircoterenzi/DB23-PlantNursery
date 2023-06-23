@@ -1,4 +1,4 @@
-package it.unibo.nursery.view.impl;
+package it.unibo.nursery.view;
 
 import java.sql.Connection;
 

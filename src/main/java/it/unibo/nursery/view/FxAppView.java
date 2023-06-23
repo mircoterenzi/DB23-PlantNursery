@@ -1,9 +1,8 @@
-package it.unibo.nursery.view.impl;
+package it.unibo.nursery.view;
 
 import java.io.IOException;
 import java.sql.Connection;
 
-import it.unibo.nursery.view.api.AppView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

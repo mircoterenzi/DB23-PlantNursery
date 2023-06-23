@@ -1,4 +1,4 @@
-package it.unibo.nursery.model.api;
+package it.unibo.nursery.model;
 
 import java.util.Collection;
 import java.util.Date;

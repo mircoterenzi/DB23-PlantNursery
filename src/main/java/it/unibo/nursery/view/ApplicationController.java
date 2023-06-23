@@ -1,4 +1,4 @@
-package it.unibo.nursery.view.impl;
+package it.unibo.nursery.view;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -10,8 +10,8 @@ import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Supplier;
-import it.unibo.nursery.model.api.Features;
-import it.unibo.nursery.model.impl.FeaturesImpl;
+import it.unibo.nursery.model.Features;
+import it.unibo.nursery.model.FeaturesImpl;
 import it.unibo.nursery.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
