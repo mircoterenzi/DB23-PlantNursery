@@ -67,7 +67,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <TableView fx:id="plantView" prefHeight="703.0" prefWidth="561.0" />
+                  <TableView fx:id="plantView" />
                </center>
             </BorderPane>
         </content>
@@ -100,7 +100,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <TableView fx:id="supplierView" prefHeight="709.0" prefWidth="567.0" />
+                  <TableView fx:id="supplierView" />
                </center>
             </BorderPane>
         </content>
@@ -149,7 +149,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <TableView fx:id="employeeView" prefHeight="656.0" prefWidth="551.0" />
+                  <TableView fx:id="employeeView" />
                </center>
             </BorderPane>
         </content>
@@ -191,7 +191,7 @@
                   </FlowPane>
                </left>
                <center>
-                  <FlowPane fx:id="statView" prefHeight="596.0" prefWidth="568.0" />
+                  <TableView fx:id="statView" />
                </center>
             </BorderPane>
         </content>
