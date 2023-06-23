@@ -7,17 +7,17 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.CarePlan;
 import it.unibo.nursery.db.ConnectionProvider;
+import it.unibo.nursery.db.Employee;
 import it.unibo.nursery.db.Plant;
+import it.unibo.nursery.db.PlantType;
+import it.unibo.nursery.db.Shift;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.api.Features;
-import it.unibo.nursery.model.api.ResultTable;
 import it.unibo.nursery.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -178,8 +178,7 @@ public class FeaturesImpl implements Features {
     public ObservableList<Supplier> viewSuppliers(int id) {
         final String query = "SELECT DISTINCT F.* " + 
                 "FROM Pianta P, Accessorio A, Fornitore F, Fattura Ft " + 
-                "WHERE ((P.id_prodotto = ? AND P.id_fattura = Ft.id_documento) " + 
-                "    OR (A.id_prodotto = ? AND A.id_fattura = Ft.id_documento)) " + 
+                "WHERE ((P.id_prodotto = ? AND P.id_fattura = Ft.id_documento) OR (A.id_prodotto = ? AND A.id_fattura = Ft.id_documento)) " + 
                 "AND Ft.id_fornitore = F.id_fornitore";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -248,7 +247,7 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewNextShift(int id) {
+    public ObservableList<Shift> viewNextShift(int id) {
         final String query = "SELECT cod_reparto, data, ora_inizio, ora_fine " +
                 "FROM Turno " +
                 "WHERE id_imp = ? " +
@@ -260,13 +259,14 @@ public class FeaturesImpl implements Features {
             statement.setDate(2, new java.sql.Date(System.currentTimeMillis()));
             final ResultSet result = statement.executeQuery();
             //TODO show the result on the side
+            return null;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public void viewOnShift(String date, int startingTime, int endTime) {
+    public ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime) {
         final String query = "SELECT I.id_imp, nome, cognome, ora_inizio, ora_fine " + 
                 "FROM Turno T, Impiegato I " + 
                 "WHERE T.id_imp = I.id_imp " +
@@ -277,7 +277,20 @@ public class FeaturesImpl implements Features {
             statement.setInt(2, endTime);
             statement.setDate(3, Utils.dateToSqlDate(Utils.buildDate(date).get()));
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
+            
+            final ObservableList<Employee> data = FXCollections.observableArrayList();
+            while (result.next()) {
+                data.add(new Employee(
+                        result.getString("nome"),
+                        result.getString("cognome"),
+                        result.getString("CF"),
+                        result.getFloat("stipendio"),
+                        Utils.sqlDateToDate(result.getDate("data_assunzione")),
+                        result.getInt("id_imp")
+                ));
+            }
+            return data;
+
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -298,7 +311,7 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void viewBestSelling(String from, String to) {
+    public ObservableList<PlantType> viewBestSelling(String from, String to) {
         final String query = "SELECT nome, COUNT(*) AS num_piante " +
                 "FROM Pianta, Scontrino " +
                 "WHERE id_scontrino = id_documento " +
@@ -310,14 +323,15 @@ public class FeaturesImpl implements Features {
             statement.setDate(1, Utils.dateToSqlDate(Utils.buildDate(from).get()));
             statement.setDate(2, Utils.dateToSqlDate(Utils.buildDate(to).get()));
             final ResultSet result = statement.executeQuery();
-            //TODO show the result on the side
+            
+            return null;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public ResultTable viewMoreTreated(Date from, Date to) {
+    public ObservableList<Plant> viewMoreTreated(Date from, Date to) {
         this.createDatesView( from, to);
         this.createCureCountView(from, to);
         final String query = "SELECT P.id_prodotto, DATEDIFF(L.care_end, L.care_start) AS days_in_care, " +
@@ -332,7 +346,7 @@ public class FeaturesImpl implements Features {
                "WHERE DATEDIFF(L.care_end, L.care_start) / N.acqua < C.water_count " +
                "OR DATEDIFF(L.care_end, L.care_start) / N.acqua < C.concime_count;";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            final ResultSet result = statement.executeQuery();
+            /*final ResultSet result = statement.executeQuery();
             ResultTable table = new ResultTableImpl(List.of("plant","days in care",
                                                             "water expected","water given",
                                                             "fertilizer expected","fertilizer given"));
@@ -347,7 +361,8 @@ public class FeaturesImpl implements Features {
                 table.addLine(line);
             }
             System.out.println(table.getTableToString());
-            return table;
+            return table; */
+            return null;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
