@@ -147,11 +147,10 @@ public class ApplicationController {
     void viewMoreTreatedOnClick(ActionEvent event) {
         Optional<Date> start = Utils.buildDate(statStartingDate.getText());
         Optional<Date> end = Utils.buildDate(statEndDate.getText());
-        var titles = List.of("plant", "type", "days in care", "water expected", "water given", "fertilizer expected", "fertilizer given");
+        var titles = List.of("Id", "Tipologia", "Giorni di cura", "Annaffiatura teorica",
+                "Annaffiatura effettiva", "Concimazione teorica", "Concimazione effettiva");
         if (end.isPresent() && start.isPresent()) {
             ObservableList<PlantCure> values = features.viewMoreTreated(start.get(), end.get());
-            statStartingDate.clear();
-            statEndDate.clear();
             statView.setItems(values);
             statView.getColumns().clear(); // Clear existing columns before adding new ones
 
@@ -257,9 +256,9 @@ public class ApplicationController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         TableColumn<Product,Integer> description = new TableColumn<>("Descrizione");
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        TableColumn<Product,String> price = new TableColumn<>("Price");
+        TableColumn<Product,String> price = new TableColumn<>("Prezzo");
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        TableColumn<Product,Integer> type = new TableColumn<>("Type");
+        TableColumn<Product,Integer> type = new TableColumn<>("Tipologia");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         view.getColumns().addAll(id, description, price, type);
         view.setItems(data);

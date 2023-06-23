@@ -351,7 +351,7 @@ public class FeaturesImpl implements Features {
             while (result.next()) {
                 data.add(new PlantSold(
                         result.getString("nome"),
-                        result.getInt("num_piate")
+                        result.getInt("num_piante")
                 ));
             }
             return data;
