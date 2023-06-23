@@ -16,16 +16,16 @@
 
 <TabPane prefHeight="547.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
-      <Tab closable="false" text="Piante">
+      <Tab closable="false" text="Prodotti">
         <content>
             <BorderPane prefHeight="500.0" prefWidth="785.0">
                <left>
                   <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
                      <children>
                         <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una pianta" wrappingWidth="167.68119748737445" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un prodotto" wrappingWidth="167.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="plantID" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <TextField fx:id="productID" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#viewSuppliersOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza fornitori">
                            <font>
@@ -41,7 +41,7 @@
                         <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una tipologia" wrappingWidth="167.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="plantTypeID" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <TextField fx:id="plantTypeID" prefHeight="25.0" prefWidth="190.0" promptText="ID tipo pianta" />
                         <TextField fx:id="discount" prefHeight="25.0" prefWidth="190.0" promptText="Sconto da applicare (in  %)" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#applyDiscountOnClick" prefHeight="25.0" prefWidth="200.0" text="Applica sconto" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
