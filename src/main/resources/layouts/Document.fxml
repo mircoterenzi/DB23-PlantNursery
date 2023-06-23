@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Text?>
+
+<TabPane prefHeight="553.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <tabs>
+      <Tab closable="false" text="Fattura">
+         <content>
+            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400.0" prefWidth="428.0">
+               <children>
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci i dati per la fattura" textAlignment="CENTER" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="supplierID" promptText="Fornitore" />
+                  <TextField fx:id="dateInvoice" promptText="Data (dd/mm/yyyy)" />
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il prodotto" textAlignment="CENTER" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="description" promptText="Descrizione" />
+                  <TextField fx:id="price" promptText="Prezzo" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="type" promptText="Nome scientifico" />
+                  <TextField fx:id="height" promptText="Altezza" />
+                  <TextField fx:id="width" promptText="Larghezza vaso" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <Button fx:id="changeProductButton" mnemonicParsing="false" onAction="#changeProductOnClick" prefHeight="25.0" prefWidth="206.0" text="Voglio inserire un accessorio" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <Button mnemonicParsing="false" onAction="#addToInvoiceOnClick" prefHeight="25.0" prefWidth="206.0" text="Aggiungi in fattura" />
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#completeInvoiceOnClick" prefHeight="25.0" prefWidth="206.0" text="Completa lo scontrino" />
+               </children>
+            </FlowPane>
+         </content>
+      </Tab>
+      <Tab closable="false" text="Scontrino">
+        <content>
+            <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="400.0" prefWidth="428.0">
+               <children>
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci i dati per lo scontrino" textAlignment="CENTER" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="dateReceipt" promptText="Data (dd/mm/yyyy)" />
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il prodotto" textAlignment="CENTER" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <TextField fx:id="productID" promptText="Codice identificativo" />
+                  <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                  <Button mnemonicParsing="false" onAction="#addToReceiptOnClick" prefHeight="25.0" prefWidth="206.0" text="Aggiungi allo scontrino" />
+                  <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#completeReceiptOnClick" prefHeight="25.0" prefWidth="206.0" text="Completa lo scontrino" />
+               </children>
+            </FlowPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>

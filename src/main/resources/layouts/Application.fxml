@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
@@ -23,9 +22,9 @@
                   <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="516.0" prefWidth="216.0" BorderPane.alignment="CENTER">
                      <children>
                         <Separator focusTraversable="false" prefHeight="20.0" prefWidth="200.0" visible="false" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un prodotto" wrappingWidth="167.68119748737445" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una tipologia di prodotto" wrappingWidth="193.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="productID" prefHeight="25.0" prefWidth="190.0" promptText="Codice Identificativo" />
+                        <TextField fx:id="productID" prefHeight="25.0" prefWidth="190.0" promptText="Nome" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#viewSuppliersOnClick" prefHeight="25.0" prefWidth="200.0" text="Visualizza fornitori">
                            <font>
@@ -41,7 +40,7 @@
                         <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona una tipologia" wrappingWidth="167.68119748737445" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <TextField fx:id="plantTypeID" prefHeight="25.0" prefWidth="190.0" promptText="ID tipo pianta" />
+                        <TextField fx:id="plantTypeID" prefHeight="25.0" prefWidth="190.0" promptText="Nome pianta" />
                         <TextField fx:id="discount" prefHeight="25.0" prefWidth="190.0" promptText="Sconto da applicare (in  %)" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#applyDiscountOnClick" prefHeight="25.0" prefWidth="200.0" text="Applica sconto" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
@@ -59,6 +58,12 @@
                         <CheckBox fx:id="fertilizer" mnemonicParsing="false" text="Fertilizzante" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
                         <Button mnemonicParsing="false" onAction="#addTreatmentOnClick" prefHeight="25.0" prefWidth="200.0" text="Aggiungi cura effettuata" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
+                        <Button mnemonicParsing="false" onAction="#openDocumentManagerOnClick" prefHeight="25.0" prefWidth="200.0" text="Apri gestione fatture/scontrini" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -88,10 +93,16 @@
                               <Font size="12.0" />
                            </font>
                         </Button>
+                        <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
+                        <Button mnemonicParsing="false" onAction="#removeSupplierOnClick" prefHeight="25.0" prefWidth="200.0" text="Rimuovi fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
                         <Separator focusTraversable="false" prefHeight="30.0" prefWidth="200.0" />
                         <TextField fx:id="supplierName" promptText="Nome azienda" />
                         <Separator focusTraversable="false" prefHeight="10.0" prefWidth="200.0" visible="false" />
-                        <Button fx:id="add_fornitore" mnemonicParsing="false" onAction="#addSupplierOnClick" prefHeight="25.0" prefWidth="200.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                        <Button mnemonicParsing="false" onAction="#addSupplierOnClick" prefHeight="25.0" prefWidth="200.0" text="Aggiungi un fornitore" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -152,16 +163,6 @@
                   <TableView fx:id="employeeView" />
                </center>
             </BorderPane>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Compra">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-      <Tab closable="false" text="Vendi">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
         </content>
       </Tab>
       <Tab closable="false" text="Statistiche">
