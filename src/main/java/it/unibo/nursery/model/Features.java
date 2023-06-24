@@ -16,9 +16,25 @@ import javafx.collections.ObservableList;
 
 public interface Features {
 
+    /**
+     * @return a list of Suppliers
+     */
     public ObservableList<Supplier> viewAllSuppliers();
+
+    /**
+     * @return a list of Products in stock
+     */
     public ObservableList<Product> viewAllProducts();
+
+    /**
+     * @return a list of Employees
+     */
     public ObservableList<Employee> viewAllEmployees();
+
+    /**
+     * remove a supplier from the database
+     */
+    public void removeSupplier(int supplierId);
     /**
      * Insert an employee in the database.
      */

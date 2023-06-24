@@ -69,7 +69,7 @@ public class ApplicationController {
             employeeSurname.getText(),
             employeeCF.getText(), 
             Float.parseFloat(employeeSalary.getText()),
-            Utils.buildDate(hireDate.getText()).orElse(null) ); //TODO in else metti oggi
+            Utils.buildDate(hireDate.getText()).get() );
         showEmployees(employeeView, features.viewAllEmployees());
         employeeName.clear();
         employeeSurname.clear();
@@ -202,7 +202,7 @@ public class ApplicationController {
     void viewProductsOnClick(ActionEvent event) {
         TableColumn<String, String> name = new TableColumn<>("Nome");
         employeeView.getColumns().addAll(name);
-        employeeView.setItems(features.viewProducts(Integer.parseInt(productID.getText())));
+        employeeView.setItems(features.viewProducts(Integer.parseInt(supplierID.getText())));
     }
 
     @FXML
@@ -212,7 +212,9 @@ public class ApplicationController {
 
     @FXML
     void removeSupplierOnClick(ActionEvent event) {
-        //TODO
+        features.removeSupplier(Integer.parseInt(supplierID.getText()));
+        supplierID.clear();
+        this.initialize();
     }
 
     @FXML

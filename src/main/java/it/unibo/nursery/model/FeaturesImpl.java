@@ -33,6 +33,46 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
+    public void removeSupplier(int supplierId) {
+
+        if(supplierId==1){
+            throw new IllegalArgumentException("cannot remove id = 1 ");
+        }
+        if (checkDependencies(supplierId)) {
+            handleDependencies(supplierId);
+        }
+        String Query = "DELETE FROM Fornitore WHERE id_fornitore = ?";
+        try (PreparedStatement statement = this.connection.prepareStatement(Query)) {
+            statement.setInt(1, supplierId);
+            statement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private boolean checkDependencies(int supplierId) {
+        String query = "SELECT * FROM Fattura WHERE id_fornitore = ?";
+        try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, supplierId);
+            return statement.executeQuery().next();
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private void handleDependencies(int supplierId) {
+
+        String query = "UPDATE Fattura SET id_fornitore = 1 " +
+                                "WHERE id_fornitore = ?";
+        try (PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, supplierId);
+            statement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Override
     public void addEmployee(String FirstName, String LastName, String CF, float income, Date employment_date) {
         final String query = "INSERT INTO Impiegato" +
                                 "(nome, cognome, CF, stipendio, data_assunzione, id_imp)" + 
@@ -414,7 +454,6 @@ public class FeaturesImpl implements Features {
             statement.setDate(3, Utils.dateToSqlDate(Utils.dateToSqlDate(from)));
             statement.setDate(4, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
             statement.executeUpdate();
-            //TODO show the result on the side
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -434,7 +473,6 @@ public class FeaturesImpl implements Features {
             statement.setDate(4, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
             statement.setDate(5, Utils.dateToSqlDate(Utils.dateToSqlDate(to)));
             statement.executeUpdate();
-            //TODO show the result on the side
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -557,5 +595,4 @@ public class FeaturesImpl implements Features {
             throw new IllegalStateException(e);
         }
     }
-
 }
