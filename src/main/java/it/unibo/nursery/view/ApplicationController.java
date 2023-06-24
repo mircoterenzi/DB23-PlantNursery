@@ -200,9 +200,11 @@ public class ApplicationController {
 
     @FXML
     void viewProductsOnClick(ActionEvent event) {
-        TableColumn<String, String> name = new TableColumn<>("Nome");
-        employeeView.getColumns().addAll(name);
-        employeeView.setItems(features.viewProducts(Integer.parseInt(supplierID.getText())));
+        supplierView.getColumns().clear();
+        TableColumn<String, String> name = new TableColumn<>("Nome prodotto");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        supplierView.getColumns().add(name);
+        supplierView.setItems(features.viewProducts(Integer.parseInt(supplierID.getText())));
     }
 
     @FXML
