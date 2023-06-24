@@ -11,6 +11,7 @@ import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
+import it.unibo.nursery.db.SimpleType;
 import it.unibo.nursery.db.Supplier;
 import javafx.collections.ObservableList;
 
@@ -68,7 +69,7 @@ public interface Features {
     /**
      * View all products available from a given supplier.
      */
-    public ObservableList<String> viewProducts(int id);
+    public ObservableList<SimpleType> viewProducts(int id);
 
     /**
      * View the care plan for a plant.

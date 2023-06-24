@@ -18,6 +18,7 @@ import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
+import it.unibo.nursery.db.SimpleType;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.utils.Utils;
 import javafx.collections.FXCollections;
@@ -247,7 +248,7 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public ObservableList<String> viewProducts(int id) {
+    public ObservableList<SimpleType> viewProducts(int id) {
         final String query = "SELECT DISTINCT nome " +
                 "FROM Pianta P, Fattura FT " +
                 "WHERE P.id_fattura = FT.id_documento " +
@@ -262,9 +263,9 @@ public class FeaturesImpl implements Features {
             statement.setInt(2, id);
             final ResultSet result = statement.executeQuery();
 
-            final ObservableList<String> data = FXCollections.observableArrayList();
+            final ObservableList<SimpleType> data = FXCollections.observableArrayList();
             while (result.next()) {
-                data.add(result.getString("nome"));
+                data.add(new SimpleType(result.getString("nome")));
             }
             return data;
 
