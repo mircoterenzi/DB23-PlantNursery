@@ -102,11 +102,15 @@ public class DocumentController {
         if (data.isPresent()) {
             try{
                 int supplier = Integer.parseInt(supplierID.getText());
-                features.processInvoice(supplier, data.get(), plants, accessories);
-                plants.clear();
-                accessories.clear();
-                supplierID.clear();
-                dateInvoice.clear();
+                if(supplier !=1 ){
+                    features.processInvoice(supplier, data.get(), plants, accessories);
+                    plants.clear();
+                    accessories.clear();
+                    supplierID.clear();
+                    dateInvoice.clear();
+                }else{
+                    supplierID.setText("invalid id");
+                }
             } catch ( final NumberFormatException e){
                 //nothing to do just wait for a valid input
             }
