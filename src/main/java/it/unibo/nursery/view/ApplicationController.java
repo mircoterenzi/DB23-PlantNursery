@@ -76,6 +76,7 @@ public class ApplicationController {
         employeeCF.clear();
         employeeSalary.clear();
         hireDate.clear();
+        this.initialize();
     }
 
     @FXML
@@ -83,6 +84,7 @@ public class ApplicationController {
         features.addSupplier(supplierName.getText());
         showSuppliers(supplierView, features.viewAllSuppliers());
         supplierName.clear();
+        this.initialize();
     }
 
     @FXML
@@ -102,7 +104,10 @@ public class ApplicationController {
     void applyDiscountOnClick(ActionEvent event) {
         features.applyDiscount(
                 plantTypeID.getText(),
-                Integer.parseInt(discount.getText()));
+                Float.parseFloat(discount.getText()));
+        plantTypeID.clear();
+        discount.clear();
+        this.initialize();
     }
 
     @FXML

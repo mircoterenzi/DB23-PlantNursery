@@ -42,7 +42,7 @@ public interface Features {
     /**
      * Apply a discount on a type of plant.
      */
-    public void applyDiscount(String scientific_name, int discount);
+    public void applyDiscount(String scientific_name, Float discount);
 
     /**
      * View all suppliers for a given product.

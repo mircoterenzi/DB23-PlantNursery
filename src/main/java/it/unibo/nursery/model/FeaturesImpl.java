@@ -162,16 +162,18 @@ public class FeaturesImpl implements Features {
     }
 
     @Override
-    public void applyDiscount(String scientific_name, int discount) {
+    public void applyDiscount(String scientific_name, Float discount) {
 
         if(scientific_name.length()>20 || discount >100 || discount<0 ){
             throw new IllegalArgumentException("invalid parameters for applyDiscount");
         }
 
-        final String query = "UPDATE Pianta SET prezzo = prezzo *? " + 
-                            "WHERE nome = '?' )";
+        final String query = "UPDATE Pianta SET prezzo = ( prezzo * ? ) " + 
+                            "WHERE nome = ? ";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, 1-discount/100);
+            float sconto = 1 - discount/100;
+            System.out.println(scientific_name+sconto);
+            statement.setFloat(1, sconto);
             statement.setString(2, scientific_name);
             statement.executeUpdate();
         } catch (final SQLIntegrityConstraintViolationException e) {
@@ -439,12 +441,9 @@ public class FeaturesImpl implements Features {
     }
 
     private int getNext(String table_name, String column) {
-        String query = "SELECT MAX(?) FROM ?";
-        System.out.println(query);
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, column);
-            statement.setString(2,table_name);
-             ResultSet resultSet = statement.executeQuery();
+        String query = "SELECT MAX("+ column + ") FROM " + table_name;
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 return resultSet.getInt(1) + 1;
             } else {
@@ -454,6 +453,7 @@ public class FeaturesImpl implements Features {
             throw new IllegalStateException(e);
         }
     }
+
 
     private int nextId_prod(){
         String query = "SELECT MAX(id_prodotto) AS max_id_prodotto " + 
