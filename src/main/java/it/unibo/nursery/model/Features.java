@@ -20,85 +20,85 @@ public interface Features {
     /**
      * @return a list of Suppliers
      */
-    public ObservableList<Supplier> viewAllSuppliers();
+    ObservableList<Supplier> viewAllSuppliers();
 
     /**
      * @return a list of Products in stock
      */
-    public ObservableList<Product> viewAllProducts();
+    ObservableList<Product> viewAllProducts();
 
     /**
      * @return a list of Employees
      */
-    public ObservableList<Employee> viewAllEmployees();
+    ObservableList<Employee> viewAllEmployees();
 
     /**
      * remove a supplier from the database
      */
-    public void removeSupplier(int supplierId);
+    void removeSupplier(int supplierId);
     /**
      * Insert an employee in the database.
      */
-    public void addEmployee(String FirstName,String LastName,String CF,float income, Date employment_date);
+    void addEmployee(String firstName,String lastName,String CF,float income, Date employmentDate);
 
     /**
      * Insert a supplier in the database.
      */
-    public void addSupplier(String name);
+    void addSupplier(String name);
 
     /**
      * Issue a receipt.
      */
-    public void issueReceipt(Date date, int id_imp, Collection<Integer> prod);
+    void issueReceipt(Date date, int id_imp, Collection<Integer> prod);
 
     /**
      * Process an invoice.
      */
-    public void processInvoice(int id_supplier,Date date,Collection<Plant> plants, Collection<Accessory> accessories);
+    void processInvoice(int id_supplier,Date date,Collection<Plant> plants, Collection<Accessory> accessories);
 
     /**
      * Apply a discount on a type of plant.
      */
-    public void applyDiscount(String scientific_name, Float discount);
+    void applyDiscount(String scientific_name, Float discount);
 
     /**
      * View all suppliers for a given product.
      */
-    public ObservableList<Supplier> viewSuppliers(String type);
+    ObservableList<Supplier> viewSuppliers(String type);
 
     /**
      * View all products available from a given supplier.
      */
-    public ObservableList<SimpleType> viewProducts(int id);
+    ObservableList<SimpleType> viewProducts(int id);
 
     /**
      * View the care plan for a plant.
      */
-    public ObservableList<CarePlan> viewCarePlan(int id);
+    ObservableList<CarePlan> viewCarePlan(int id);
 
     /**
      * View an employee's next shift.
      */
-    public ObservableList<Shift> viewNextShift(int id);
+    ObservableList<Shift> viewNextShift(int id);
 
     /**
      * View employees on shift.
      */
-    public ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime);
+    ObservableList<Employee> viewOnShift(String date, int startingTime, int endTime);
 
     /**
      * Add treatments performed on a plant.
      */
-    public void addTreatment(int plantID, int employeeID, String date, boolean fertilizer);
+    void addTreatment(int plantID, int employeeID, String date, boolean fertilizer);
 
     /**
      * Display the best-selling plants in a given period.
      */
-    public ObservableList<PlantSold> viewBestSelling(String from, String to);
+    ObservableList<PlantSold> viewBestSelling(String from, String to);
 
      /**
      * View plants that have been treated more than indicated in their care plan 
      * in the range of dates considered or the time in storage during that timeframe.
      */
-    public ObservableList<PlantCure> viewMoreTreated(Date from, Date to);
+    ObservableList<PlantCure> viewMoreTreated(Date from, Date to);
 }

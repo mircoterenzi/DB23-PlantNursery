@@ -17,7 +17,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,8 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ApplicationController {
 
-    @FXML private Button add_employee;
-    @FXML private Button add_fornitore;
     @FXML private TextField dateTreatment;
     @FXML private TextField discount;
     @FXML private TextField employeeCF;

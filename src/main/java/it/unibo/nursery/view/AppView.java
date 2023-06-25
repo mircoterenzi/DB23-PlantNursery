@@ -2,25 +2,18 @@ package it.unibo.nursery.view;
 
 import java.sql.Connection;
 
+/** Interface that models a scene and window manager for the application */
 public interface AppView {
 
-    /**
-     * Set the Login scene.
-     */
-    public void setLoginScene();
+    /** Set the Login scene */
+    void setLoginScene();
 
-    /**
-     * Set the Application scene.
-     */
-    public void setApplicationScene();
+    /** Set the main application scene on stage and connect it to its controller */
+    void setApplicationScene();
 
-    /*
-     * Opens a pop-up window for the Document scene
-     */
-    public void openDocumentScene();
+    /** Opens a new pop-up stage for the document manager scene and links it to its controller */
+    void openDocumentScene();
 
-    /**
-     * Add a connection to a DB.
-     */
-    public void addConnection(Connection connection);
+    /** Add a connection to a DB */
+    void addConnection(Connection connection);
 }

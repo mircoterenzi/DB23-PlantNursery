@@ -11,12 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/** Scene and window manager for the application. */
 public class FxAppView implements AppView {
 
     private Stage stage;
     private Features features;
 
-    public FxAppView(Stage stage) {
+    /**
+     * Class constructor.
+     * @param stage The main stage
+     */
+    public FxAppView(final Stage stage) {
         stage.setTitle("Plant Nursery Manager");
         stage.getIcons().add(new Image(ClassLoader.getSystemResource("images/icon.png").toString()));
         this.stage = stage;
@@ -66,9 +71,10 @@ public class FxAppView implements AppView {
         }
     }
 
+
     @Override
-    public void addConnection(Connection connection) {
+    public void addConnection(final Connection connection) {
         features = new FeaturesImpl(connection);
     }
-    
+
 }
