@@ -1,5 +1,5 @@
 # DB23-PlantNursery 🪴
-The project represents a database for an imaginary plant nursery, the implemented functionalities are:
+The project represents a database management application for an imaginary plant nursery, the implemented functionalities are:
 1. Insert a person (employee or supplier)
 2. Process an invoice
 3. Issue a receipt
