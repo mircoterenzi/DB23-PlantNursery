@@ -41,8 +41,7 @@ CREATE TABLE Impiegato (
      stipendio FLOAT NOT NULL,
      data_assunzione DATE NOT NULL,
      id_imp NUMERIC NOT NULL,
-     PRIMARY KEY (id_imp),
-     CONSTRAINT SID_Impiegato_ID UNIQUE (CF)
+     PRIMARY KEY (id_imp)
 );
 
 create table Piano_di_Cura (
