@@ -191,8 +191,8 @@ create unique index ID_Fornitore_IND
 create unique index ID_Impiegato_IND
      on Impiegato (id_imp);
 
-create unique index SID_Impiegato_IND
-     on Impiegato (CF);
+CREATE UNIQUE INDEX SID_Impiegato_IND
+	ON Impiegato (CF);
 
 create unique index ID_Piano_di_Cura_IND
      on Piano_di_Cura (id_piano);
