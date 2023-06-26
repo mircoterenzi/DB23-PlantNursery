@@ -22,3 +22,4 @@ Once the repository is downloaded, the database name set by default is *plantnur
 private static final String DB_NAME = "plantnursery";
 ````
 Username and password will be asked for in the application's login screen.
+Start the application by running the main method in the *src/main/java/it/unibo/nursery/PlantNursery.java* file.
