@@ -10,6 +10,7 @@ import it.unibo.nursery.db.PlantCure;
 import it.unibo.nursery.db.PlantSold;
 import it.unibo.nursery.db.Product;
 import it.unibo.nursery.db.Shift;
+import it.unibo.nursery.db.SimpleType;
 import it.unibo.nursery.db.Supplier;
 import it.unibo.nursery.model.Features;
 import it.unibo.nursery.utils.Utils;
@@ -198,7 +199,7 @@ public class ApplicationController {
     @FXML
     void viewProductsOnClick(ActionEvent event) {
         supplierView.getColumns().clear();
-        TableColumn<String, String> name = new TableColumn<>("Nome prodotto");
+        TableColumn<SimpleType, String> name = new TableColumn<>("Nome prodotto");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         supplierView.getColumns().add(name);
         supplierView.setItems(features.viewProducts(Integer.parseInt(supplierID.getText())));
@@ -228,7 +229,7 @@ public class ApplicationController {
         showProducts(plantView, features.viewAllProducts());
     }
 
-    private void showSuppliers(TableView<Supplier> view, ObservableList<Supplier> data) {
+    private void showSuppliers(TableView view, ObservableList<Supplier> data) {
         view.getColumns().clear();
         TableColumn<Supplier,Integer> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -238,7 +239,7 @@ public class ApplicationController {
         view.setItems(data);
     }
 
-    private void showEmployees(TableView<Employee> view, ObservableList<Employee> data) {
+    private void showEmployees(TableView view, ObservableList<Employee> data) {
         view.getColumns().clear();
         TableColumn<Employee,String> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -256,7 +257,7 @@ public class ApplicationController {
         view.setItems(data);
     }
 
-    private void showProducts(TableView<Product> view, ObservableList<Product> data) {
+    private void showProducts(TableView view, ObservableList<Product> data) {
         view.getColumns().clear();
         TableColumn<Product,String> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));

@@ -213,7 +213,6 @@ public class FeaturesImpl implements Features {
                             "WHERE nome = ? ";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             float sconto = 1 - discount/100;
-            System.out.println(scientific_name+sconto);
             statement.setFloat(1, sconto);
             statement.setString(2, scientific_name);
             statement.executeUpdate();
