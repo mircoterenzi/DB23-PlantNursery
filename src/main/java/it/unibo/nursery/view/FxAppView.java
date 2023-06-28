@@ -29,6 +29,7 @@ public class FxAppView implements AppView {
         stage.show();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLoginScene() {
         try {
@@ -42,6 +43,7 @@ public class FxAppView implements AppView {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setApplicationScene() {
         try {
@@ -55,6 +57,7 @@ public class FxAppView implements AppView {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void openDocumentScene() {
         try {
@@ -71,7 +74,7 @@ public class FxAppView implements AppView {
         }
     }
 
-
+    /** {@inheritDoc} */
     @Override
     public void addConnection(final Connection connection) {
         features = new FeaturesImpl(connection);

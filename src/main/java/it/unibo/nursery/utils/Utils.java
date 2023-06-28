@@ -5,20 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Optional;
 
+/** This class contains some useful methods used within the code */
 public final class Utils {
-    private Utils() {}
-    
+
     public static java.util.Date sqlDateToDate(final java.sql.Date sqlDate) {
         return sqlDate == null ? null : new java.util.Date(sqlDate.getTime());
     }
-    
+
     public static java.sql.Date dateToSqlDate(final java.util.Date date) {
         return date == null ? null : new java.sql.Date(date.getTime());
     }
-    
+
     public static Optional<java.util.Date> buildDate(final String dateString) {
         try {
-            final String dateFormatString = "dd/MM/yyyy";
+            final String dateFormatString = "dd/mm/yyyy";
             final java.util.Date date = new SimpleDateFormat(dateFormatString, Locale.ITALIAN).parse(dateString);
             return Optional.of(date);
         } catch (final ParseException e) {

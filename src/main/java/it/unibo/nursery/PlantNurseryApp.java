@@ -4,7 +4,7 @@ import it.unibo.nursery.view.FxAppView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/** JavaFX Application */
+/** JavaFX Application. */
 public class PlantNurseryApp extends Application {
 
     @Override
