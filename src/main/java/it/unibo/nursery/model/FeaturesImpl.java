@@ -118,7 +118,7 @@ public class FeaturesImpl implements Features {
     @Override
     public void issueReceipt(final Date date, final int idEmployee, final Collection<Integer> products) {
         final String query = "insert into scontrino (id_documento,data,impiegato) values (?,?,?)";
-        int idReceipt = this.nextIdDoc();
+        final int idReceipt = this.nextIdDoc();
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, idReceipt);
             statement.setDate(2, Utils.dateToSqlDate(date));
@@ -129,7 +129,7 @@ public class FeaturesImpl implements Features {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         } 
-        for (int idProd : products) {
+        for (final int idProd : products) {
             this.addReceiptToProduct(idProd, idReceipt);
         }
     }
@@ -161,7 +161,7 @@ public class FeaturesImpl implements Features {
     @Override
     public void processInvoice(final int idSupplier, final Date date, final Collection<Plant> plants,
             final Collection<Accessory> accessories) {
-        int idInvoice = this.nextIdDoc();
+        final int idInvoice = this.nextIdDoc();
         final String query = "insert into fattura(id_documento,data,id_fornitore) values(?,?,?)";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, idInvoice);
@@ -222,7 +222,7 @@ public class FeaturesImpl implements Features {
         final String query = "UPDATE Pianta SET prezzo = ( prezzo * ? )"
                 + "WHERE nome = ? ";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
-            float sconto = 1 - discount / 100;
+            final float sconto = 1 - discount / 100;
             statement.setFloat(1, sconto);
             statement.setString(2, scientificName);
             statement.executeUpdate();
@@ -430,16 +430,15 @@ public class FeaturesImpl implements Features {
                + "OR DATEDIFF(L.care_end, L.care_start) / N.acqua < C.concime_count";
         try (PreparedStatement statement = this.connection.prepareStatement(query)) {
             final ResultSet result = statement.executeQuery();
-            ObservableList<PlantCure> list = FXCollections.observableList(new LinkedList<PlantCure>());
+            final ObservableList<PlantCure> list = FXCollections.observableList(new LinkedList<PlantCure>());
             while (result.next()) {
-                PlantCure plant = new PlantCure(result.getInt("id_prodotto"),
+                list.add(new PlantCure(result.getInt("id_prodotto"),
                         result.getString("nome_scientifico"),
                         result.getInt("days_in_care"),
                         result.getInt("expected_acqua"),
                         result.getInt("water_count"),
                         result.getInt("expected_concime"),
-                        result.getInt("concime_count"));
-                list.add(plant);
+                        result.getInt("concime_count")));
             }
             return list;
         } catch (final SQLException e) {
@@ -488,10 +487,10 @@ public class FeaturesImpl implements Features {
     }
 
     private int getNext(final String tableName, final String column) {
-        String query = "SELECT MAX(" + column + ") FROM " + tableName;
+        final String query = "SELECT MAX(" + column + ") FROM " + tableName;
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            return resultSet.next() ? (resultSet.getInt(1) + 1) : 1;
+            ResultSet resultSet = statement.executeQuery(query)) {
+            return resultSet.next() ? resultSet.getInt(1) + 1 : 1;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -499,7 +498,7 @@ public class FeaturesImpl implements Features {
 
 
     private int nextIdProd() {
-        String query = "SELECT MAX(id_prodotto) AS max_id_prodotto "
+        final String query = "SELECT MAX(id_prodotto) AS max_id_prodotto "
                 + "FROM ( SELECT id_prodotto FROM Pianta "
                 + "UNION ALL "
                 + "SELECT id_prodotto FROM Accessorio "
@@ -507,21 +506,21 @@ public class FeaturesImpl implements Features {
 
             try (Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)) {
-            return resultSet.next() ? (resultSet.getInt("max_id_prodotto") + 1) : 1;
+            return resultSet.next() ? resultSet.getInt("max_id_prodotto") + 1 : 1;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
     }
 
     private int nextIdDoc() {
-        String query = "SELECT MAX(id_documento) AS max_id_documento "
+        final String query = "SELECT MAX(id_documento) AS max_id_documento "
                 + "FROM ( SELECT id_documento FROM Scontrino "
                 + "UNION ALL "
                 + "SELECT id_documento FROM Fattura "
                 + ") AS merged_tables";
             try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            return resultSet.next() ? (resultSet.getInt("max_id_documento") + 1) : 1;
+            ResultSet resultSet = statement.executeQuery(query)) {
+            return resultSet.next() ? resultSet.getInt("max_id_documento") + 1 : 1;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -532,11 +531,10 @@ public class FeaturesImpl implements Features {
     public ObservableList<Supplier> viewAllSuppliers() {
        final String query = "SELECT * from Fornitore";
         try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(query);
-            ObservableList<Supplier> list = FXCollections.observableArrayList();
+            final ResultSet result = statement.executeQuery(query);
+            final ObservableList<Supplier> list = FXCollections.observableArrayList();
             while (result.next()) {
-                Supplier supp = new Supplier(result.getInt("id_fornitore"), result.getString("nome"));
-                list.add(supp);
+                list.add(new Supplier(result.getInt("id_fornitore"), result.getString("nome")));
             }
             return list;
         } catch (final SQLException e) {
@@ -557,14 +555,13 @@ public class FeaturesImpl implements Features {
                 + "FROM Accessorio A, Tipo_accessorio T "
                 + "WHERE A.tipo = T.nome_tipo AND id_scontrino IS NULL";
         try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(query);
-            ObservableList<Product> list = FXCollections.observableArrayList();
+            final ResultSet result = statement.executeQuery(query);
+            final ObservableList<Product> list = FXCollections.observableArrayList();
             while (result.next()) {
-               Product supp = new Product(result.getInt("id_prodotto"),
+               list.add(new Product(result.getInt("id_prodotto"),
                         result.getString("tipo"),
                         result.getFloat("prezzo"),
-                        result.getString("descrizione"));
-                list.add(supp);
+                        result.getString("descrizione")));
             }
             return list;
         } catch (final SQLException e) {
@@ -577,16 +574,15 @@ public class FeaturesImpl implements Features {
     public ObservableList<Employee> viewAllEmployees() {
         final String query = "SELECT * from Impiegato";
         try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(query);
-            ObservableList<Employee> list = FXCollections.observableArrayList();
+            final ResultSet result = statement.executeQuery(query);
+            final ObservableList<Employee> list = FXCollections.observableArrayList();
             while (result.next()) {
-               Employee supp = new Employee(result.getString("nome"),
+               list.add(new Employee(result.getString("nome"),
                         result.getString("cognome"),
                         result.getString("cf"),
                         result.getFloat("stipendio"),
                         Utils.sqlDateToDate(result.getDate("data_assunzione")),
-                        result.getInt("id_imp"));
-                list.add(supp);
+                        result.getInt("id_imp")));
             }
             return list;
         } catch (final SQLException e) {

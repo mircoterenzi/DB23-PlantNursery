@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 /** Scene and window manager for the application. */
 public class FxAppView implements AppView {
 
-    private Stage stage;
+    private final Stage stage;
     private Features features;
 
     /**
@@ -35,7 +35,7 @@ public class FxAppView implements AppView {
         try {
             final var loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/Login.fxml"));
             loader.setController(new LoginController(this));
-            Parent root = loader.load();
+            final Parent root = loader.load();
             final Scene scene = new Scene(root);
             stage.setScene(scene);
         } catch (IOException e) {

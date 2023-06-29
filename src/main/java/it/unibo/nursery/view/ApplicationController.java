@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/** The ApplicationController class is responsible for handling the main application scene and related actions. */
 public class ApplicationController {
 
     @FXML private TextField dateTreatment;
@@ -51,23 +52,33 @@ public class ApplicationController {
     @FXML private TextField supplierID;
     @FXML private TextField supplierName;
     @FXML private TableView supplierView;
-    
-    private Features features;
-    private AppView view;
 
-    public ApplicationController(AppView view, Features features) {
+    private final Features features;
+    private final AppView view;
+
+    /**
+     * Constructor for ApplicationController class.
+     * @param view
+     * @param features
+     */
+    public ApplicationController(final AppView view, final Features features) {
         this.view = view;
         this.features = features;
     }
 
+    /**
+     * Handles the action event when the add-employee button is clicked.
+     * Adds a new employee to the database.
+     * @param event
+     */
     @FXML
-    void addEmployeeOnClick(ActionEvent event) {
+    void addEmployeeOnClick(final ActionEvent event) {
         features.addEmployee(
             employeeName.getText(),
             employeeSurname.getText(),
             employeeCF.getText(), 
             Float.parseFloat(employeeSalary.getText()),
-            Utils.buildDate(hireDate.getText()).get() );
+            Utils.buildDate(hireDate.getText()).get());
         showEmployees(employeeView, features.viewAllEmployees());
         employeeName.clear();
         employeeSurname.clear();
@@ -77,16 +88,26 @@ public class ApplicationController {
         this.initialize();
     }
 
+    /**
+     * Handles the action event when the add-supplier button is clicked.
+     * Adds a new supplier to the database.
+     * @param event
+     */
     @FXML
-    void addSupplierOnClick(ActionEvent event) {
+    void addSupplierOnClick(final ActionEvent event) {
         features.addSupplier(supplierName.getText());
         showSuppliers(supplierView, features.viewAllSuppliers());
         supplierName.clear();
         this.initialize();
     }
 
+    /**
+     * Handles the action event when the add-treatment button is clicked.
+     * Adds a new treatment to the database.
+     * @param event
+     */
     @FXML
-    void addTreatmentOnClick(ActionEvent event) {
+    void addTreatmentOnClick(final ActionEvent event) {
         features.addTreatment(
                 Integer.parseInt(plantTreatmentID.getText()),
                 Integer.parseInt(employeeTreatmentID.getText()),
@@ -98,8 +119,13 @@ public class ApplicationController {
         fertilizer.setSelected(false);
     }
 
+    /**
+     * Handles the action event when the apply-discount button is clicked.
+     * Apply a discount on a certain type of plant.
+     * @param event
+     */
     @FXML
-    void applyDiscountOnClick(ActionEvent event) {
+    void applyDiscountOnClick(final ActionEvent event) {
         features.applyDiscount(
                 plantTypeID.getText(),
                 Float.parseFloat(discount.getText()));
@@ -108,62 +134,80 @@ public class ApplicationController {
         this.initialize();
     }
 
+    /**
+     * Handles the action event when the view-best-sellers button is clicked.
+     * Show the three best-selling plants.
+     * @param event
+     */
     @FXML
-    void viewBestSellersOnClick(ActionEvent event) {
+    void viewBestSellersOnClick(final ActionEvent event) {
         statView.getColumns().clear();
-        TableColumn<PlantSold,Integer> sold = new TableColumn<>("Nome");
+        final TableColumn<PlantSold, Integer> sold = new TableColumn<>("Nome");
         sold.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<PlantSold,String> quantity = new TableColumn<>("Unità vendute");
+        final TableColumn<PlantSold, String> quantity = new TableColumn<>("Unità vendute");
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        statView.getColumns().addAll(sold,quantity);
+        statView.getColumns().addAll(sold, quantity);
         statView.setItems(features.viewBestSelling(statStartingDate.getText(), statEndDate.getText()));
     }
 
+    /**
+     * Handles the action event when the view-care-plan button is clicked.
+     * Show the care plan for a certain plant.
+     * @param event
+     */
     @FXML
-    void viewCarePlanOnClick(ActionEvent event) {
+    void viewCarePlanOnClick(final ActionEvent event) {
         plantView.getColumns().clear();
-        TableColumn<CarePlan,Integer> id = new TableColumn<>("Id");
+        final TableColumn<CarePlan, Integer> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<CarePlan,String> water = new TableColumn<>("Acqua");
+        final TableColumn<CarePlan, String> water = new TableColumn<>("Acqua");
         water.setCellValueFactory(new PropertyValueFactory<>("water"));
-        TableColumn<CarePlan,Integer> light = new TableColumn<>("Livello luce");
+        final TableColumn<CarePlan, Integer> light = new TableColumn<>("Livello luce");
         light.setCellValueFactory(new PropertyValueFactory<>("light"));
-        TableColumn<CarePlan,String> fertilizer = new TableColumn<>("Concime");
+        final TableColumn<CarePlan, String> fertilizer = new TableColumn<>("Concime");
         fertilizer.setCellValueFactory(new PropertyValueFactory<>("fertilizer"));
-        TableColumn<CarePlan,Integer> minTemp = new TableColumn<>("Temperatura min");
+        final TableColumn<CarePlan, Integer> minTemp = new TableColumn<>("Temperatura min");
         minTemp.setCellValueFactory(new PropertyValueFactory<>("minTemp"));
-        TableColumn<CarePlan,String> maxTemp = new TableColumn<>("Temperatura max");
+        final TableColumn<CarePlan, String> maxTemp = new TableColumn<>("Temperatura max");
         maxTemp.setCellValueFactory(new PropertyValueFactory<>("maxTemp"));
-        plantView.getColumns().addAll(id,water,light,fertilizer,minTemp,maxTemp);
+        plantView.getColumns().addAll(id, water, light, fertilizer, minTemp, maxTemp);
         plantView.setItems(features.viewCarePlan(Integer.parseInt(plantToSearchID.getText())));
     }
 
+    /**
+     * Handles the action event when the view-employee button is clicked.
+     * Shows all employees on shift.
+     * @param event
+     */
     @FXML
-    void viewEmployeesOnShiftOnClick(ActionEvent event) {
+    void viewEmployeesOnShiftOnClick(final ActionEvent event) {
         showEmployees(employeeView, features.viewOnShift(
                 shiftDate.getText(), 
                 Integer.parseInt(shiftStartingTime.getText()), 
                 Integer.parseInt(shiftEndTime.getText())));
     }
 
+    /**
+     * Handles the action event when the view-more-treated button is clicked.
+     * Shows the plants that have been treated more than indicated in their care plan.
+     * @param event
+     */
     @FXML
-    void viewMoreTreatedOnClick(ActionEvent event) {
-        Optional<Date> start = Utils.buildDate(statStartingDate.getText());
-        Optional<Date> end = Utils.buildDate(statEndDate.getText());
-        var titles = List.of("Id", "Tipologia", "Giorni di cura", "Annaffiatura teorica",
+    void viewMoreTreatedOnClick(final ActionEvent event) {
+        final Optional<Date> start = Utils.buildDate(statStartingDate.getText());
+        final Optional<Date> end = Utils.buildDate(statEndDate.getText());
+        final var titles = List.of("Id", "Tipologia", "Giorni di cura", "Annaffiatura teorica",
                 "Annaffiatura effettiva", "Concimazione teorica", "Concimazione effettiva");
         if (end.isPresent() && start.isPresent()) {
-            ObservableList<PlantCure> values = features.viewMoreTreated(start.get(), end.get());
+            final ObservableList<PlantCure> values = features.viewMoreTreated(start.get(), end.get());
             statView.setItems(values);
             statView.getColumns().clear(); // Clear existing columns before adding new ones
-
             for (int i = 0; i < titles.size(); i++) {
-                TableColumn<PlantCure, String> column = new TableColumn<>(titles.get(i));
-                int columnIndex = i;
-
+                final TableColumn<PlantCure, String> column = new TableColumn<>(titles.get(i));
+                final int columnIndex = i;
                 column.setCellValueFactory(cellData -> {
-                    PlantCure plantCure = cellData.getValue();
-                    String cellValue = switch (columnIndex) {
+                    final PlantCure plantCure = cellData.getValue();
+                    final String cellValue = switch (columnIndex) {
                         case 0 -> String.valueOf(plantCure.getId_prodotto());
                         case 1 -> plantCure.getScientificName();
                         case 2 -> String.valueOf(plantCure.getDays_in_care());
@@ -175,53 +219,81 @@ public class ApplicationController {
                     };
                     return new SimpleStringProperty(cellValue);
                 });
-
                 statView.getColumns().add(column);
             }
         }
     }
 
+    /**
+     * Handles the action event when the view-next-shift button is clicked.
+     * Shows the next shift for the given employee.
+     * @param event
+     */
     @FXML
-    void viewNextShiftOnClick(ActionEvent event) {
+    void viewNextShiftOnClick(final ActionEvent event) {
         employeeView.getColumns().clear();
-        TableColumn<Shift,Integer> id = new TableColumn<>("Codice reparto");
+        final TableColumn<Shift, Integer> id = new TableColumn<>("Codice reparto");
         id.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
-        TableColumn<Shift,String> date = new TableColumn<>("Data");
+        final TableColumn<Shift, String> date = new TableColumn<>("Data");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        TableColumn<Shift,Integer> startingTime = new TableColumn<>("Ora inizio");
+        final TableColumn<Shift, Integer> startingTime = new TableColumn<>("Ora inizio");
         startingTime.setCellValueFactory(new PropertyValueFactory<>("startingTime"));
-        TableColumn<Shift,String> endTime = new TableColumn<>("Ora fine");
+        final TableColumn<Shift, String> endTime = new TableColumn<>("Ora fine");
         endTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        employeeView.getColumns().addAll(id,date,startingTime,endTime);
+        employeeView.getColumns().addAll(id, date, startingTime, endTime);
         employeeView.setItems(features.viewNextShift(Integer.parseInt(employeeID.getText())));
     }
 
+    /**
+     * Handles the action event when the view-products button is clicked.
+     * Shows all the products the given supplier sells.
+     * @param event
+     */
     @FXML
-    void viewProductsOnClick(ActionEvent event) {
+    void viewProductsOnClick(final ActionEvent event) {
         supplierView.getColumns().clear();
-        TableColumn<SimpleType, String> name = new TableColumn<>("Nome prodotto");
+        final TableColumn<SimpleType, String> name = new TableColumn<>("Nome prodotto");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         supplierView.getColumns().add(name);
         supplierView.setItems(features.viewProducts(Integer.parseInt(supplierID.getText())));
     }
 
+    /**
+     * Handles the action event when the view-supplier button is clicked.
+     * Shows all the supplier for the given product.
+     * @param event
+     */
     @FXML
-    void viewSuppliersOnClick(ActionEvent event) {
+    void viewSuppliersOnClick(final ActionEvent event) {
         showSuppliers(plantView, features.viewSuppliers(productID.getText()));
     }
 
+    /**
+     * Handles the action event when the remove-supplier button is clicked.
+     * Removes a supplier from the database.
+     * @param event
+     */
     @FXML
-    void removeSupplierOnClick(ActionEvent event) {
+    void removeSupplierOnClick(final ActionEvent event) {
         features.removeSupplier(Integer.parseInt(supplierID.getText()));
         supplierID.clear();
         this.initialize();
     }
 
+    /**
+     * Handles the action event when the open-document-manager button is clicked.
+     * Opens a new pop-up document management window.
+     * @param event
+     */
     @FXML
-    void openDocumentManagerOnClick(ActionEvent event) {
+    void openDocumentManagerOnClick(final ActionEvent event) {
         view.openDocumentScene();
     }
 
+    /** 
+     * Method executed when the scene is loaded.
+     * Loads all the starting database data on the tabs.
+     */
     @FXML
     void initialize() {
         showSuppliers(supplierView, features.viewAllSuppliers());
@@ -229,43 +301,43 @@ public class ApplicationController {
         showProducts(plantView, features.viewAllProducts());
     }
 
-    private void showSuppliers(TableView view, ObservableList<Supplier> data) {
+    private void showSuppliers(final TableView view, final ObservableList<Supplier> data) {
         view.getColumns().clear();
-        TableColumn<Supplier,Integer> id = new TableColumn<>("Id");
+        final TableColumn<Supplier, Integer> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Supplier,String> name = new TableColumn<>("Nome");
+        final TableColumn<Supplier, String> name = new TableColumn<>("Nome");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         view.getColumns().addAll(id, name);
         view.setItems(data);
     }
 
-    private void showEmployees(TableView view, ObservableList<Employee> data) {
+    private void showEmployees(final TableView view, final ObservableList<Employee> data) {
         view.getColumns().clear();
-        TableColumn<Employee,String> id = new TableColumn<>("Id");
+        final TableColumn<Employee, String> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Employee,Integer> name = new TableColumn<>("Nome");
+        final TableColumn<Employee, Integer> name = new TableColumn<>("Nome");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<Employee,String> surname = new TableColumn<>("Cognome");
+        final TableColumn<Employee, String> surname = new TableColumn<>("Cognome");
         surname.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        TableColumn<Employee,Integer> taxCode = new TableColumn<>("CF");
+        final TableColumn<Employee, Integer> taxCode = new TableColumn<>("CF");
         taxCode.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
-        TableColumn<Employee,String> salary = new TableColumn<>("Stipendio");
+        final TableColumn<Employee, String> salary = new TableColumn<>("Stipendio");
         salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-        TableColumn<Employee,Integer> employmentDate = new TableColumn<>("Data assunzione");
+        final TableColumn<Employee, Integer> employmentDate = new TableColumn<>("Data assunzione");
         employmentDate.setCellValueFactory(new PropertyValueFactory<>("employmentDate"));
         view.getColumns().addAll(id, name, surname, taxCode, salary, employmentDate);
         view.setItems(data);
     }
 
-    private void showProducts(TableView view, ObservableList<Product> data) {
+    private void showProducts(final TableView view, final ObservableList<Product> data) {
         view.getColumns().clear();
-        TableColumn<Product,String> id = new TableColumn<>("Id");
+        final TableColumn<Product, String> id = new TableColumn<>("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Product,Integer> description = new TableColumn<>("Descrizione");
+        final TableColumn<Product, Integer> description = new TableColumn<>("Descrizione");
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        TableColumn<Product,String> price = new TableColumn<>("Prezzo");
+        final TableColumn<Product, String> price = new TableColumn<>("Prezzo");
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        TableColumn<Product,Integer> type = new TableColumn<>("Tipologia");
+        final TableColumn<Product, Integer> type = new TableColumn<>("Tipologia");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         view.getColumns().addAll(id, description, price, type);
         view.setItems(data);

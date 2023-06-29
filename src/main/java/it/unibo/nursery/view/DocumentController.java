@@ -1,11 +1,9 @@
 package it.unibo.nursery.view;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import it.unibo.nursery.db.Accessory;
 import it.unibo.nursery.db.Plant;
@@ -16,10 +14,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/** The DocumentController class is responsible for handling the title document-managment scene and related actions. */
 public class DocumentController {
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
     @FXML private TextField dateInvoice;
     @FXML private TextField dateReceipt;
     @FXML private TextField description;
@@ -32,53 +29,72 @@ public class DocumentController {
     @FXML private TextField width;
     @FXML private Button changeProductButton;
 
-    private Features features;
+    private final Features features;
+    private final List<Plant> plants = new LinkedList<>();
+    private final List<Accessory> accessories = new LinkedList<>();
+    private final List<Integer> products = new LinkedList<>();
     private boolean isAPlant = true;
-    private List<Plant> plants = new LinkedList<>();
-    private List<Accessory> accessories = new LinkedList<>();
-    private List<Integer> products = new LinkedList<>();
 
-    public DocumentController(Features features) {
+    /**
+     * Constructor for DocumentController class.
+     * @param features
+     */
+    public DocumentController(final Features features) {
         this.features = features;
     }
 
+    /**
+     * Handles the action event when the add-to-invoice button is clicked.
+     * Adds a new product to the current invoice.
+     * @param event
+     */
     @FXML
-    void addToInvoiceOnClick(ActionEvent event) {
-        try{
-            if(isAPlant){
+    void addToInvoiceOnClick(final ActionEvent event) {
+        try {
+            if (isAPlant) {
                 plants.add(new Plant(description.getText(), type.getText(),
-                                    Float.parseFloat(width.getText()),
-                                    Float.parseFloat(height.getText()),
-                                    Float.parseFloat(price.getText())));
+                        Float.parseFloat(width.getText()),
+                        Float.parseFloat(height.getText()),
+                        Float.parseFloat(price.getText())));
                 description.clear();
                 type.clear();
                 price.clear();
                 width.clear();
                 height.clear();
 
-            }else{
+            } else {
                 accessories.add(new Accessory(description.getText(), type.getText()));
                 description.clear();
                 type.clear();
                 price.clear();
             }
-        }catch ( final NumberFormatException e){
+        } catch (final NumberFormatException e) {
                 //nothing to do just wait for a valid input
             }
     }
 
+    /**
+     * Handles the action event when the add-to-receipt button is clicked.
+     * Adds a new product to the current receipt.
+     * @param event
+     */
     @FXML
-    void addToReceiptOnClick(ActionEvent event) {
-        try{
+    void addToReceiptOnClick(final ActionEvent event) {
+        try {
             products.add(Integer.parseInt(productID.getText()));
             productID.clear();
-        }catch ( final NumberFormatException e){
+        } catch (final NumberFormatException e) {
             //nothing to do just wait for a valid input
         }
     }
 
+    /**
+     * Handles the action event when the change-product button is clicked.
+     * Switches between add-plant and add-accessory view.
+     * @param event
+     */
     @FXML
-    void changeProductOnClick(ActionEvent event) {
+    void changeProductOnClick(final ActionEvent event) {
         isAPlant = !isAPlant;
         if (isAPlant) {
             type.setPromptText("Nome scientifico");
@@ -95,43 +111,49 @@ public class DocumentController {
         }
     }
 
+    /**
+     * Handles the action event when the complete-invoice button is clicked.
+     * End current invoice.
+     * @param event
+     */
     @FXML
-    void completeInvoiceOnClick(ActionEvent event) {
-        Optional<Date> data = Utils.buildDate(dateInvoice.getText());
-        
+    void completeInvoiceOnClick(final ActionEvent event) {
+        final Optional<Date> data = Utils.buildDate(dateInvoice.getText());
         if (data.isPresent()) {
-            try{
-                int supplier = Integer.parseInt(supplierID.getText());
-                if(supplier !=1 ){
+            try {
+                final int supplier = Integer.parseInt(supplierID.getText());
+                if (supplier != 1) {
                     features.processInvoice(supplier, data.get(), plants, accessories);
                     plants.clear();
                     accessories.clear();
                     supplierID.clear();
                     dateInvoice.clear();
-                }else{
+                } else {
                     supplierID.setText("invalid id");
                 }
-            } catch ( final NumberFormatException e){
+            } catch (final NumberFormatException e) {
                 //nothing to do just wait for a valid input
             }
         }
     }
 
+    /**
+     * Handles the action event when the complete-receipt button is clicked.
+     * End current receipt.
+     * @param event
+     */
     @FXML
-    void completeReceiptOnClick(ActionEvent event) {
-        Optional<Date> data = Utils.buildDate(dateReceipt.getText());
-        
+    void completeReceiptOnClick(final ActionEvent event) {
+        final Optional<Date> data = Utils.buildDate(dateReceipt.getText());
         if (data.isPresent()) {
-            try{
-                int employee = Integer.parseInt(employeeID.getText());
+            try {
+                final int employee = Integer.parseInt(employeeID.getText());
                 features.issueReceipt(data.get(), employee, products);
                 products.clear();
                 dateReceipt.clear();
-
-            } catch ( final NumberFormatException e){
+            } catch (final NumberFormatException e) {
                 //nothing to do just wait for a valid input
             }
         }
     }
-
 }

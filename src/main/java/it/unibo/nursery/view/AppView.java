@@ -2,7 +2,7 @@ package it.unibo.nursery.view;
 
 import java.sql.Connection;
 
-/** Interface that models a scene and window manager for the application */
+/** Interface that models a scene and window manager for the application. */
 public interface AppView {
 
     /** Set the Login scene. */

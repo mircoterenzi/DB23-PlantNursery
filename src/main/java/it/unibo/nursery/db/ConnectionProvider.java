@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- * Expose a utility method to connect to a MySQL database 
+ * Expose a utility method to connect to a MySQL database.
  */
 public final class ConnectionProvider {
     private final String username;
@@ -16,7 +16,7 @@ public final class ConnectionProvider {
      * @param password the password used to connect to the database
      * @param dbName the name of the database to connect to
      */
-    public ConnectionProvider (final String username, final String password, final String dbName) {
+    public ConnectionProvider(final String username, final String password, final String dbName) {
         this.username = username;
         this.password = password;
         this.dbName = dbName;
@@ -32,6 +32,7 @@ public final class ConnectionProvider {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(dbUri, this.username, this.password);
         } catch (Exception e) {
-            throw new IllegalStateException("Could not establish a connection with db", e);        }
+            throw new IllegalStateException("Could not establish a connection with db", e);
+        }
     }
 }
