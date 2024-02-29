@@ -1,4 +1,8 @@
-# DB23-PlantNursery 🪴
+<p align="center">
+  <img src="https://github.com/mircoterenzi/DB23-PlantNursery/blob/main/src/main/resources/images/icon.png" alt="logo" width="300"/>
+</p>
+
+# PlantNursery - Manage your plants
 The project represents a database management application for an imaginary plant nursery, the implemented functionalities are:
 1. Insert a person (employee or supplier)
 2. Process an invoice
